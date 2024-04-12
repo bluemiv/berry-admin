@@ -1,0 +1,20 @@
+{
+  "name": "berry-skin-dashboard",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/bluemiv/berry-skin-dashboard.git",
+  "author": "taehongkim <public.bluemiv@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "apps/**/*",
+    "packages/**/*"
+  ],
+  "scripts": {
+    "web": "yarn workspace @berry-skin-dashboard/web",
+    "server": "yarn workspace @berry-skin-dashboard/server"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  }
+}
