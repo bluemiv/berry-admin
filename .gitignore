@@ -58,3 +58,6 @@
 # typescript
 **/*.tsbuildinfo
 **/next-env.d.ts
+
+**/pgdata
+**/pgadmin
