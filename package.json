@@ -1,8 +1,8 @@
 {
-  "name": "berry-skin-dashboard",
+  "name": "berry-admin",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/bluemiv/berry-skin-dashboard.git",
+  "repository": "https://github.com/bluemiv/berry-admin.git",
   "author": "taehongkim <public.bluemiv@gmail.com>",
   "license": "MIT",
   "private": true,
@@ -15,8 +15,8 @@
     "start": "yarn db:up && concurrently \"yarn web build && yarn web start\" \"yarn server start:prod\"",
     "db:down": "docker-compose down",
     "db:up": "yarn db:down && docker-compose up -d",
-    "web": "yarn workspace @berry-skin-dashboard/web",
-    "server": "yarn workspace @berry-skin-dashboard/server"
+    "web": "yarn workspace @berry-admin/web",
+    "server": "yarn workspace @berry-admin/server"
   },
   "devDependencies": {
     "@types/node": "^20.3.1",

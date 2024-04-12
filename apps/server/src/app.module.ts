@@ -10,7 +10,14 @@ import { ProductModule } from './product/product.module';
 import { ProductVersionModule } from './product-version/product-version.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmModuleOptions), BuyerModule, MarketingModule, OrderModule, ProductModule, ProductVersionModule],
+  imports: [
+    TypeOrmModule.forRoot(typeOrmModuleOptions),
+    BuyerModule,
+    MarketingModule,
+    OrderModule,
+    ProductModule,
+    ProductVersionModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
