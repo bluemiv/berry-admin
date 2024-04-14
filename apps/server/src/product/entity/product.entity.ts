@@ -1,26 +1,19 @@
 import {
   CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Buyer } from '../../buyer/entity/buyer.entity';
 import { ProductVersion } from '../../product-version/entity/product-version.entity';
 
 @Entity()
-export class Order {
+export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @ManyToOne(() => Buyer, (buyer) => buyer.orders)
-  buyer: Buyer;
-
-  @OneToOne(() => ProductVersion, (productVersion) => productVersion.order)
-  @JoinColumn()
-  productVersion: ProductVersion;
+  @OneToMany(() => ProductVersion, (productVersion) => productVersion.product)
+  productVersions: ProductVersion[];
 
   @CreateDateColumn()
   createdAt: Date;
