@@ -16,7 +16,7 @@ export class ApproveMarketing {
   @OneToOne(() => Buyer, (buyer) => buyer.approveMarketing)
   buyer: Buyer;
 
-  @Column()
+  @Column({ nullable: false })
   isApprove: boolean;
 
   @CreateDateColumn()

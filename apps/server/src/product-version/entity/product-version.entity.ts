@@ -15,7 +15,7 @@ export class ProductVersion {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: false })
   version: string;
 
   @Column()

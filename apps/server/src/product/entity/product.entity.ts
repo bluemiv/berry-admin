@@ -1,4 +1,5 @@
 import {
+  Column,
   CreateDateColumn,
   Entity,
   OneToMany,
@@ -11,6 +12,9 @@ import { ProductVersion } from '../../product-version/entity/product-version.ent
 export class Product {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ nullable: false })
+  name: string;
 
   @OneToMany(() => ProductVersion, (productVersion) => productVersion.product)
   productVersions: ProductVersion[];

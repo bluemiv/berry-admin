@@ -16,7 +16,7 @@ export class Buyer {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column({ nullable: false })
   name: string;
 
   @Column()
