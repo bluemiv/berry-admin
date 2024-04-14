@@ -6,7 +6,7 @@ export const typeOrmModuleOptions: TypeOrmModuleOptions = {
   port: 5432,
   username: 'root',
   password: 'root',
-  database: 'berry-dashboard-db',
+  database: 'berry-admin-db',
   entities: [__dirname + '/../**/*.entity.{js,ts}'],
   synchronize: true,
 };
