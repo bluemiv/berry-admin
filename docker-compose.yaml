@@ -2,8 +2,8 @@
 version: '3.4'
 
 services:
-  berry-dashboard-db:
-    container_name: "berry-dashboard-db"
+  berry-admin-db:
+    container_name: "berry-admin-db"
     image: postgres
     ports:
       - "5432:5432"
@@ -12,12 +12,12 @@ services:
     volumes:
       - "./pgdata:/var/lib/postgresql/data"
     environment:
-      - "POSTGRES_DB=berry-dashboard-db"
+      - "POSTGRES_DB=berry-admin-db"
       - "POSTGRES_USER=root"
       - "POSTGRES_PASSWORD=root"
       - "PGDATA=/var/lib/postgresql/data/pgdata"
-  berry-dashboard-db-admin:
-    container_name: "berry-dashboard-db-admin"
+  berry-admin-db-admin:
+    container_name: "berry-admin-db-admin"
     image: dpage/pgadmin4
     ports:
       - "5480:80"
