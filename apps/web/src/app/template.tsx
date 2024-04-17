@@ -1,4 +1,5 @@
 import { TPropsWithChildren } from '@/types';
+import Layout from '@/components/Layout';
 
 export default function Template({ children }: TPropsWithChildren) {
   return (
@@ -7,9 +8,9 @@ export default function Template({ children }: TPropsWithChildren) {
         사이드바
       </aside>
       <div className="min-h-[calc(100vh-1rem)] flex-1 flex flex-col">
-        <header>header</header>
+        <Layout.Header />
         <main className="bg-white">{children}</main>
-        <footer>footer</footer>
+        <Layout.Footer />
       </div>
     </div>
   );
