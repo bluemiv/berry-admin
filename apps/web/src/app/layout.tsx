@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={classNames(pretendard.className, 'min-h-screen bg-indigo-50/60 text-indigo-950')}
+        className={classNames(pretendard.className, 'min-h-screen bg-[#F4F7FE] text-brand-1000')}
       >
         {children}
       </body>

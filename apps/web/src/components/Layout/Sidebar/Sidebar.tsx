@@ -1,7 +1,14 @@
+import GlobalNavigationBar from '@/components/Layout/Sidebar/GlobalNavigationBar';
+
 export default function Sidebar() {
   return (
-    <aside className="rounded-2xl min-h-[calc(100vh-1rem)] min-w-[300px] p-sm bg-white">
-      사이드바
+    <aside className="min-h-screen min-w-[300px] bg-white">
+      <div className="h-[80px] flex justify-center items-center text-xl font-bold border-b-2 border-slate-50">
+        BERRY ADMIN
+      </div>
+      <div>
+        <GlobalNavigationBar />
+      </div>
     </aside>
   );
 }

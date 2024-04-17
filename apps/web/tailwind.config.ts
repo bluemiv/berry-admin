@@ -1,9 +1,16 @@
 import type { Config } from 'tailwindcss';
 
-const primaryColor = {
-  'primary-hover': '#1890ff',
-  primary: '#096dd9',
-  'primary-active': '#0050b3',
+const brandColor = {
+  'brand-100': '#f0f5ff',
+  'brand-200': '#d6e4ff',
+  'brand-300': '#adc6ff',
+  'brand-400': '#85a5ff',
+  'brand-500': '#597ef7',
+  'brand-600': '#2f54eb',
+  'brand-700': '#1d39c4',
+  'brand-800': '#10239e',
+  'brand-900': '#061178',
+  'brand-1000': '#030852',
 };
 
 export const space = {
@@ -24,7 +31,7 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      colors: { ...primaryColor },
+      colors: { ...brandColor },
       padding: { ...space },
       margin: { ...space },
       gap: { ...space },
