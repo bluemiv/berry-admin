@@ -21,7 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
-      <body className={classNames(pretendard.className, 'min-h-screen')}>{children}</body>
+      <body
+        className={classNames(pretendard.className, 'min-h-screen bg-indigo-50/60 text-indigo-950')}
+      >
+        {children}
+      </body>
     </html>
   );
 }
