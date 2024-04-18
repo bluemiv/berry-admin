@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { Buyer } from './entity/buyer.entity';
-import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Buyer } from './entity/buyer.entity';
 
 @Injectable()
 export class BuyerService {
