@@ -14,7 +14,7 @@ export default function Breadcrumb() {
     }, []);
 
   return (
-    <div className="text-gray-600 text-sm flex gap-md">
+    <div className="text-gray-400 text-sm flex gap-md">
       {pathList.map((path) => {
         const isCurrentPage = path === curPathname;
         if (isCurrentPage) return <span key={path}>{ROUTE_PATH_NAME[path]}</span>;

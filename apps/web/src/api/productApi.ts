@@ -10,6 +10,13 @@ const productApi = {
     params,
   }),
   /**
+   * 제품의 버전 정보 목록을 조회하는 API
+   * @param productId
+   */
+  getProductVersions: (productId: string) => ({
+    url: `/product-version/${productId}`,
+  }),
+  /**
    * 특정 상품을 조회하는 API
    * @param uuid
    */

@@ -22,47 +22,54 @@ export default function Table({ rowKey = 'key', columns, dataSource }: TProps) {
     col.key || (lodash.isArray(col.dataIndex) ? col.dataIndex.join('-') : col.dataIndex);
 
   return (
-    <table className="w-full text-sm">
-      <thead className="bg-slate-50">
-        <tr>
-          {columns?.map((col) => {
+    <div>
+      <table className="w-full text-sm">
+        <thead className="bg-slate-50">
+          <tr>
+            {columns?.map((col) => {
+              return (
+                <th className="px-xs text-left font-semibold" key={getColKey(col)}>
+                  <div
+                    className={classNames('flex items-center min-h-[35px]', col.className)}
+                    style={!!col.width ? { maxWidth: col.width } : {}}
+                  >
+                    {col.title}
+                  </div>
+                </th>
+              );
+            })}
+          </tr>
+        </thead>
+        <tbody>
+          {dataSource.map((record) => {
+            const dataKey = record?.[rowKey || 'key'];
             return (
-              <th className="px-xs text-left font-semibold" key={getColKey(col)}>
-                <div
-                  className={classNames('flex items-center min-h-[35px]', col.className)}
-                  style={!!col.width ? { maxWidth: col.width } : {}}
-                >
-                  {col.title}
-                </div>
-              </th>
+              <tr key={`table-tr-${dataKey}`}>
+                {columns.map((col) => {
+                  const curData = lodash.isArray(col.dataIndex)
+                    ? col.dataIndex.reduce((acc, v) => acc?.[v] || {}, record)
+                    : record?.[col.dataIndex];
+                  return (
+                    <td key={`table-td-${getColKey(col)}-${dataKey}`}>
+                      <div
+                        className={classNames('flex items-center min-h-[35px]', col.className)}
+                        style={!!col.width ? { maxWidth: col.width } : {}}
+                      >
+                        {!!col.render ? col.render(curData, record) : curData}
+                      </div>
+                    </td>
+                  );
+                })}
+              </tr>
             );
           })}
-        </tr>
-      </thead>
-      <tbody>
-        {dataSource.map((record) => {
-          const dataKey = record?.[rowKey || 'key'];
-          return (
-            <tr key={`table-tr-${dataKey}`}>
-              {columns.map((col) => {
-                const curData = lodash.isArray(col.dataIndex)
-                  ? col.dataIndex.reduce((acc, v) => acc?.[v] || {}, record)
-                  : record?.[col.dataIndex];
-                return (
-                  <td key={`table-td-${getColKey(col)}-${dataKey}`}>
-                    <div
-                      className={classNames('flex items-center min-h-[35px]', col.className)}
-                      style={!!col.width ? { maxWidth: col.width } : {}}
-                    >
-                      {!!col.render ? col.render(curData, record) : curData}
-                    </div>
-                  </td>
-                );
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+        </tbody>
+      </table>
+      {dataSource?.length === 0 && (
+        <div className="flex items-center justify-center uppercase h-[120px] border-b border-slate-50 text-gray-400 text-sm">
+          Empty
+        </div>
+      )}
+    </div>
   );
 }
