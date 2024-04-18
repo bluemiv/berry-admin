@@ -19,7 +19,11 @@ export default function Page() {
             {
               title: 'ProductName',
               dataIndex: 'name',
-              render: (name, record) => <Button onClick={() => console.log(record)}>{name}</Button>,
+              render: (name, record) => (
+                <Button type="link" onClick={() => console.log(record)}>
+                  {name}
+                </Button>
+              ),
             },
             {
               title: 'CreatedAt',
