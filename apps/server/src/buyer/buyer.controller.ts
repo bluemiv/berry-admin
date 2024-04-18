@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { CreateBuyerDto } from './dto/create-buyer.dto';
+import { CreateBuyerDTO } from './dto/create-buyer-d-t.o';
 
 @Controller('buyer')
 export class BuyerController {
@@ -15,7 +15,7 @@ export class BuyerController {
   }
 
   @Post()
-  create(@Body() createBuyerDto: CreateBuyerDto): string {
+  create(@Body() createBuyerDto: CreateBuyerDTO): string {
     console.log(createBuyerDto);
     return 'create';
   }
