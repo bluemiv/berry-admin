@@ -11,7 +11,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex justify-between items-end h-[150px] gap-md p-md">
+    <header className="flex justify-between items-end h-[150px] gap-md pb-md">
       <div className="flex flex-col gap-md">
         <PageTitle />
         <Breadcrumb />
