@@ -1,5 +1,9 @@
 export const ROUTE_PATH = {
-  ROOT: '/',
   DASHBOARD: '/dashboard',
   ANALYTICS: '/analytics',
-} as const;
+};
+
+export const ROUTE_PATH_NAME = {
+  [ROUTE_PATH.DASHBOARD]: 'Dashboard',
+  [ROUTE_PATH.ANALYTICS]: 'Data Analytics',
+};
