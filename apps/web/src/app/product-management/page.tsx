@@ -1,17 +1,26 @@
+'use client';
+
 import dayjs from 'dayjs';
-import { Card } from '@/components';
+import { Button, Card } from '@/components';
 import { Table } from '@/components';
 import { DATE_FORMAT } from '@/constants';
+import { useFetchProducts } from '@/features/product/hooks';
 
 export default function Page() {
+  const { data: productsRes } = useFetchProducts();
+
   return (
-    <main className="grid grid-cols-2 gap-md">
+    <main className="flex flex-col gap-md">
       <Card title="Product Info">
         <Table
-          rowKey="idx"
+          rowKey="id"
           columns={[
-            { title: '#', key: 'idx', dataIndex: 'idx' },
-            { title: 'ProductName', key: 'productName', dataIndex: 'productName' },
+            { title: 'ID', dataIndex: 'id', className: 'max-w-[100px] break-all' },
+            {
+              title: 'ProductName',
+              dataIndex: 'name',
+              render: (name, record) => <Button onClick={() => console.log(record)}>{name}</Button>,
+            },
             {
               title: 'CreatedAt',
               key: 'createdAt',
@@ -25,14 +34,7 @@ export default function Page() {
               render: (date) => dayjs(date).format(DATE_FORMAT.DATE),
             },
           ]}
-          dataSource={[
-            {
-              idx: 1,
-              productName: 'BerrySkin',
-              createdAt: '2024-04-05',
-              updatedAt: '2024-04-05',
-            },
-          ]}
+          dataSource={productsRes?.results || []}
         />
       </Card>
       <Card title="Product Version Info">dsfdsf</Card>

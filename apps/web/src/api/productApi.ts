@@ -5,7 +5,7 @@ const productApi = {
    * 제품을 조회하는 API
    * @param params
    */
-  getProducts: (params: { [key: string]: any }) => ({
+  getProducts: (params?: { [key: string]: any }) => ({
     url: '/product',
     params,
   }),
