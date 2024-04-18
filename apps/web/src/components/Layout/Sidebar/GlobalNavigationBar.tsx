@@ -21,6 +21,11 @@ export default function GlobalNavigationBar() {
           href: ROUTE_PATH.ANALYTICS,
           icon: <Icons.BarChart />,
         },
+        {
+          label: 'Product Management',
+          href: ROUTE_PATH.PRODUCT_MANAGEMENT,
+          icon: <Icons.Boxes />,
+        },
       ].map((nav: TNavItem) => {
         const isActive = RegExp(`^${pathname}`).test(nav.href);
         return (

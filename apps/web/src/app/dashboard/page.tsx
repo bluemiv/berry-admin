@@ -1,3 +1,3 @@
 export default function Home() {
-  return <div>본문</div>;
+  return <main>본문</main>;
 }
