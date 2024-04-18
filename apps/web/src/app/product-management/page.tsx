@@ -4,10 +4,10 @@ import dayjs from 'dayjs';
 import { Button, Card } from '@/components';
 import { Table } from '@/components';
 import { DATE_FORMAT } from '@/constants';
-import { useFetchProducts } from '@/features/product/hooks';
+import { useProductsQuery } from '@/features/product/hooks';
 
 export default function Page() {
-  const { data: productsRes } = useFetchProducts();
+  const { data: productsRes } = useProductsQuery();
 
   return (
     <main className="flex flex-col gap-md">

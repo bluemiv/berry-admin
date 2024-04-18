@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import classNames from 'classnames';
+import { ReactQueryProvider } from '@/provider';
 
 const pretendard = localFont({
   src: './fonts/PretendardVariable.woff2',
@@ -24,7 +25,7 @@ export default function RootLayout({
       <body
         className={classNames(pretendard.className, 'min-h-screen bg-[#F4F7FE] text-brand-1000')}
       >
-        {children}
+        <ReactQueryProvider>{children}</ReactQueryProvider>
       </body>
     </html>
   );

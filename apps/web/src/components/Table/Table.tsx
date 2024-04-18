@@ -26,7 +26,6 @@ export default function Table({ rowKey = 'key', columns, dataSource }: TProps) {
       <thead className="bg-slate-50">
         <tr>
           {columns?.map((col) => {
-            console.log(col.width);
             return (
               <th className="px-xs text-left font-semibold" key={getColKey(col)}>
                 <div
