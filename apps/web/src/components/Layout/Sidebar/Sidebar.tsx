@@ -6,9 +6,7 @@ export default function Sidebar() {
       <div className="h-[80px] flex justify-center items-center text-xl font-bold border-b-2 border-slate-50">
         BERRY ADMIN
       </div>
-      <div>
-        <GlobalNavigationBar />
-      </div>
+      <GlobalNavigationBar />
     </aside>
   );
 }
