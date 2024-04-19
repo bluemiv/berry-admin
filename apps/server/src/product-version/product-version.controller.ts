@@ -1,6 +1,5 @@
 import { Controller, Get, Param } from '@nestjs/common';
 import { ProductVersionService } from './product-version.service';
-import { ProductService } from '../product/product.service';
 
 @Controller('product-version')
 export class ProductVersionController {

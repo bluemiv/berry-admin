@@ -2,13 +2,15 @@
 
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import { Button, Card } from '@/components';
+import { Button, Card, Modal } from '@/components';
 import { Table } from '@/components';
 import { DATE_FORMAT } from '@/constants';
 import { useProductsQuery, useProductVersionsQuery } from '@/features/product/hooks';
+import { useModal } from '@/hooks';
 
 export default function Page() {
   const [selectedProductId, setSelectedProductId] = useState<null | string>(null);
+  const [addProductModal, setAddProductModal] = useModal();
 
   const { data: productsRes } = useProductsQuery();
   const { data: productVersionsRes } = useProductVersionsQuery(selectedProductId);
@@ -16,6 +18,11 @@ export default function Page() {
   return (
     <main className="flex flex-col gap-md">
       <Card title="Product Info">
+        <div className="flex justify-end mb-md">
+          <Button type="primary" onClick={() => setAddProductModal({ visible: true })}>
+            + Add Product
+          </Button>
+        </div>
         <Table
           rowKey="id"
           columns={[
@@ -70,6 +77,13 @@ export default function Page() {
           dataSource={productVersionsRes?.results || []}
         />
       </Card>
+      <Modal
+        title="제목"
+        visible={addProductModal.visible}
+        onClose={() => setAddProductModal({ visible: false })}
+      >
+        바디
+      </Modal>
     </main>
   );
 }
