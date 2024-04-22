@@ -1,5 +1,6 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ProductVersionService } from './product-version.service';
+import { CreateProductVersionDTO } from './dto/create-product-version.dto';
 
 @Controller('product-version')
 export class ProductVersionController {
@@ -12,5 +13,10 @@ export class ProductVersionController {
       count: results.length,
       results,
     };
+  }
+
+  @Post('/:productId')
+  async createVersion(@Body() createProductVersionDTO: CreateProductVersionDTO) {
+    return this.productVersionService.createVersion(createProductVersionDTO);
   }
 }

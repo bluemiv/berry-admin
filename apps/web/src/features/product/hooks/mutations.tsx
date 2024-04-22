@@ -19,7 +19,7 @@ export const useAddProductMutation = () =>
 export const useAddProductVersionMutation = () =>
   useMutation({
     mutationFn: ({ productId, version }: { productId: string; version: string }) => {
-      const { url, params } = productApi.createProductVersion({ productId, version });
+      const { url, params } = productApi.createProductVersion(productId, { version });
       return restApi.post({ url, params });
     },
   });

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ProductVersion } from './entity/product-version.entity';
 import { ProductService } from '../product/product.service';
+import { CreateProductVersionDTO } from './dto/create-product-version.dto';
 
 @Injectable()
 export class ProductVersionService {
@@ -18,7 +19,18 @@ export class ProductVersionService {
 
   async findAllByProductId(productId: string) {
     const product = await this.productService.findOne(productId);
-    return this.productVersionRepository.findBy({ product });
+    console.log(product, await this.productVersionRepository.find({ relations: ['product'] }));
+    return this.productVersionRepository.find();
+  }
+
+  async createVersion(createProductVersionDTO: CreateProductVersionDTO) {
+    const product = await this.productService.findOne(createProductVersionDTO.productId);
+    const createdData = this.productVersionRepository.create({
+      version: createProductVersionDTO.version,
+      product,
+      isDisabled: false,
+    });
+    return this.productVersionRepository.save(createdData);
   }
 
   remove(uuid: string) {

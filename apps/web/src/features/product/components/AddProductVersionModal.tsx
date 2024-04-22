@@ -22,9 +22,9 @@ export default function AddProductVersionModal({
       visible={visible}
       onClose={() => onClose(false)}
       onOk={handleSubmit(async (formParams) => {
-        const productName = formParams.productName?.trim();
-        if (!productName) return;
-        await createProductVersion({ productId: product.id, version: formParams.version });
+        const version = formParams.version?.trim();
+        if (!version) return;
+        await createProductVersion({ productId: product.id, version });
         onClose(true);
       })}
     >

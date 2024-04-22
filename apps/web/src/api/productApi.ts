@@ -33,10 +33,11 @@ const productApi = {
   }),
   /**
    * 상품을 생성하는 API
+   * @param productId 제품 id
    * @param params
    */
-  createProductVersion: (params: { productId: string; version: string }) => ({
-    url: '/product',
+  createProductVersion: (productId: string, params: { version: string }) => ({
+    url: `/product-version/${productId}`,
     params,
   }),
 };
