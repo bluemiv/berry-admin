@@ -27,7 +27,7 @@ const productApi = {
    * 상품을 생성하는 API
    * @param params
    */
-  createProduct: (params: { name: Pick<TProduct, 'name'> }) => ({
+  createProduct: (params: { name: string }) => ({
     url: '/product',
     params,
   }),

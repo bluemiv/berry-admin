@@ -1,1 +1,1 @@
-export * from './productApi';
+export { default as productApi } from './productApi';
