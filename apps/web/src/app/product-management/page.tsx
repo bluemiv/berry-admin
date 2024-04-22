@@ -5,27 +5,21 @@ import dayjs from 'dayjs';
 import { Button, Card } from '@/components';
 import { Table } from '@/components';
 import { DATE_FORMAT } from '@/constants';
-import {
-  PRODUCT_VERSIONS_QUERY_KEY,
-  PRODUCTS_QUERY_KEY,
-  useProductsQuery,
-  useProductVersionsQuery,
-} from '@/features/product/hooks';
+import { PRODUCTS_QUERY_KEY, useProductsQuery } from '@/features/product/hooks';
 import { useModal } from '@/hooks';
-import { AddProductModal } from '@/features/product/components';
+import { AddProductModal, ProductVersionCard } from '@/features/product/components';
 import { useQueryClient } from '@tanstack/react-query';
 
 export default function Page() {
-  const [selectedProductId, setSelectedProductId] = useState<null | string>(null);
+  const [selectedProduct, setSelectedProduct] = useState<{ [key: string]: any } | null>(null);
   const [addProductModal, setAddProductModal] = useModal();
 
   const { data: productsRes } = useProductsQuery();
-  const { data: productVersionsRes } = useProductVersionsQuery(selectedProductId);
   const queryClient = useQueryClient();
 
   return (
     <main className="flex flex-col gap-md">
-      <Card title="Product Info">
+      <Card title="Products">
         <div className="flex justify-end mb-md">
           <Button type="primary" onClick={() => setAddProductModal({ visible: true })}>
             + Add Product
@@ -39,7 +33,7 @@ export default function Page() {
               title: 'ProductName',
               dataIndex: 'name',
               render: (name, record) => (
-                <Button type="link" onClick={() => setSelectedProductId(record.id)}>
+                <Button type="link" onClick={() => setSelectedProduct(record)}>
                   {name}
                 </Button>
               ),
@@ -60,31 +54,7 @@ export default function Page() {
           dataSource={productsRes?.results || []}
         />
       </Card>
-      <Card title="Product Version Info">
-        <Table
-          rowKey="id"
-          columns={[
-            { title: 'ID', dataIndex: 'id', className: 'max-w-[100px] break-all' },
-            {
-              title: 'Version',
-              dataIndex: 'version',
-            },
-            {
-              title: 'CreatedAt',
-              key: 'createdAt',
-              dataIndex: 'createdAt',
-              render: (date) => dayjs(date).format(DATE_FORMAT.DATE),
-            },
-            {
-              title: 'UpdatedAt',
-              key: 'updatedAt',
-              dataIndex: 'updatedAt',
-              render: (date) => dayjs(date).format(DATE_FORMAT.DATE),
-            },
-          ]}
-          dataSource={productVersionsRes?.results || []}
-        />
-      </Card>
+      <ProductVersionCard product={selectedProduct} />
       {addProductModal.visible && (
         <AddProductModal
           visible={addProductModal.visible}

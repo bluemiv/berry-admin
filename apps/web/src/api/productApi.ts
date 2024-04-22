@@ -31,6 +31,14 @@ const productApi = {
     url: '/product',
     params,
   }),
+  /**
+   * 상품을 생성하는 API
+   * @param params
+   */
+  createProductVersion: (params: { productId: string; version: string }) => ({
+    url: '/product',
+    params,
+  }),
 };
 
 export default productApi;

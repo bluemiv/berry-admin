@@ -23,7 +23,7 @@ export const PRODUCT_VERSIONS_QUERY_KEY = [QUERY_KEY_PREFIX, 'PRODUCT_VERSIONS']
  * 특정 제품의 버전 정보를 불러오는 쿼리
  * @param productId
  */
-export const useProductVersionsQuery = (productId: string | null) => {
+export const useProductVersionsQuery = (productId?: string | null) => {
   return useQuery({
     queryKey: [...PRODUCT_VERSIONS_QUERY_KEY, productId],
     queryFn: async () => {

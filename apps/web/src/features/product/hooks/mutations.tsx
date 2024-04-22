@@ -12,3 +12,14 @@ export const useAddProductMutation = () =>
       return restApi.post({ url, params });
     },
   });
+
+/**
+ * 제품 버전을 등록하는 mutation
+ */
+export const useAddProductVersionMutation = () =>
+  useMutation({
+    mutationFn: ({ productId, version }: { productId: string; version: string }) => {
+      const { url, params } = productApi.createProductVersion({ productId, version });
+      return restApi.post({ url, params });
+    },
+  });
