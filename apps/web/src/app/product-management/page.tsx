@@ -5,9 +5,15 @@ import dayjs from 'dayjs';
 import { Button, Card } from '@/components';
 import { Table } from '@/components';
 import { DATE_FORMAT } from '@/constants';
-import { useProductsQuery, useProductVersionsQuery } from '@/features/product/hooks';
+import {
+  PRODUCT_VERSIONS_QUERY_KEY,
+  PRODUCTS_QUERY_KEY,
+  useProductsQuery,
+  useProductVersionsQuery,
+} from '@/features/product/hooks';
 import { useModal } from '@/hooks';
 import { AddProductModal } from '@/features/product/components';
+import { useQueryClient } from '@tanstack/react-query';
 
 export default function Page() {
   const [selectedProductId, setSelectedProductId] = useState<null | string>(null);
@@ -15,6 +21,7 @@ export default function Page() {
 
   const { data: productsRes } = useProductsQuery();
   const { data: productVersionsRes } = useProductVersionsQuery(selectedProductId);
+  const queryClient = useQueryClient();
 
   return (
     <main className="flex flex-col gap-md">
@@ -27,7 +34,7 @@ export default function Page() {
         <Table
           rowKey="id"
           columns={[
-            { title: 'ID', dataIndex: 'id', className: 'max-w-[100px] break-all' },
+            { title: 'ID', dataIndex: 'id' },
             {
               title: 'ProductName',
               dataIndex: 'name',
@@ -84,6 +91,7 @@ export default function Page() {
           onClose={(refresh) => {
             setAddProductModal({ visible: false, modalData: null });
             if (!refresh) return;
+            queryClient.invalidateQueries({ queryKey: PRODUCTS_QUERY_KEY });
           }}
         />
       )}
