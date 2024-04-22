@@ -2,13 +2,19 @@ import { useForm } from 'react-hook-form';
 import Input from '@/components/Input';
 import { Modal } from '@/components';
 import { TPropsWithModal } from '@/types';
-import { useAddProductMutation } from '@/features/product/hooks';
+import { useAddProductVersionMutation } from '@/features/product/hooks';
 
-interface TProps {}
+interface TProps {
+  product: { [key: string]: any };
+}
 
-export default function AddProductModal({ visible, onClose }: TPropsWithModal<TProps>) {
+export default function AddProductVersionModal({
+  product,
+  visible,
+  onClose,
+}: TPropsWithModal<TProps>) {
   const { handleSubmit, register } = useForm();
-  const { mutateAsync: createProduct } = useAddProductMutation();
+  const { mutateAsync: createProductVersion } = useAddProductVersionMutation();
 
   return (
     <Modal
@@ -18,12 +24,12 @@ export default function AddProductModal({ visible, onClose }: TPropsWithModal<TP
       onOk={handleSubmit(async (formParams) => {
         const productName = formParams.productName?.trim();
         if (!productName) return;
-        await createProduct(productName);
+        await createProductVersion({ productId: product.id, version: formParams.version });
         onClose(true);
       })}
     >
       <form>
-        <Input label="제품명" {...register('productName')} />
+        <Input label="버전" {...register('version')} />
       </form>
     </Modal>
   );

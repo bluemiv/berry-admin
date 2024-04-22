@@ -50,6 +50,7 @@ export default function ProductVersionCard({ product }: TProps) {
       />
       {addVersionModal.visible && (
         <AddProductVersionModal
+          product={product}
           visible={addVersionModal.visible}
           onClose={(refresh) => {
             setAddVersionModal({
