@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import dayjs from 'dayjs';
-import { Button, Card, Modal } from '@/components';
+import { Button, Card } from '@/components';
 import { Table } from '@/components';
 import { DATE_FORMAT } from '@/constants';
 import { useProductsQuery, useProductVersionsQuery } from '@/features/product/hooks';
 import { useModal } from '@/hooks';
+import { AddProductModal } from '@/features/product/components';
 
 export default function Page() {
   const [selectedProductId, setSelectedProductId] = useState<null | string>(null);
@@ -77,13 +78,15 @@ export default function Page() {
           dataSource={productVersionsRes?.results || []}
         />
       </Card>
-      <Modal
-        title="제목"
-        visible={addProductModal.visible}
-        onClose={() => setAddProductModal({ visible: false })}
-      >
-        바디
-      </Modal>
+      {addProductModal.visible && (
+        <AddProductModal
+          visible={addProductModal.visible}
+          onClose={(refresh) => {
+            setAddProductModal({ visible: false, modalData: null });
+            if (!refresh) return;
+          }}
+        />
+      )}
     </main>
   );
 }
