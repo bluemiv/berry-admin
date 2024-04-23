@@ -18,16 +18,16 @@ export const useProductsQuery = () => {
   });
 };
 
-export const PRODUCT_VERSIONS_QUERY_KEY = [QUERY_KEY_PREFIX, 'PRODUCT_VERSIONS'];
+export const PRODUCT_DETAIL_QUERY_KEY = [QUERY_KEY_PREFIX, 'PRODUCT_DETAIL'];
 /**
  * 특정 제품의 버전 정보를 불러오는 쿼리
  * @param productId
  */
-export const useProductVersionsQuery = (productId?: string | null) => {
+export const useProductDetailQuery = (productId?: string | null) => {
   return useQuery({
-    queryKey: [...PRODUCT_VERSIONS_QUERY_KEY, productId],
+    queryKey: [...PRODUCT_DETAIL_QUERY_KEY, productId],
     queryFn: async () => {
-      const { url } = productApi.getProductVersions(productId!);
+      const { url } = productApi.getProductById(productId!);
       return await restApi.get({ url });
     },
     enabled: !!productId,

@@ -1,7 +1,7 @@
 import { Button, Card, Table } from '@/components';
 import dayjs from 'dayjs';
 import { DATE_FORMAT } from '@/constants';
-import { PRODUCT_VERSIONS_QUERY_KEY, useProductVersionsQuery } from '@/features/product/hooks';
+import { PRODUCT_DETAIL_QUERY_KEY, useProductDetailQuery } from '@/features/product/hooks';
 import { useModal } from '@/hooks';
 import { useQueryClient } from '@tanstack/react-query';
 import { AddProductVersionModal } from '@/features/product/components/index';
@@ -11,12 +11,12 @@ interface TProps {
 }
 
 export default function ProductVersionCard({ product }: TProps) {
-  const { data: productVersionsRes } = useProductVersionsQuery(product?.id);
+  const { data: productDetailRes } = useProductDetailQuery(product?.id);
   const queryClient = useQueryClient();
 
   const [addVersionModal, setAddVersionModal] = useModal();
 
-  const versions = productVersionsRes?.results || [];
+  const versions = productDetailRes?.productVersions || [];
   if (!product?.id) return;
   return (
     <Card title={`'${product?.name}' Versions`}>
@@ -28,7 +28,7 @@ export default function ProductVersionCard({ product }: TProps) {
       <Table
         rowKey="id"
         columns={[
-          { title: 'ID', dataIndex: 'id', className: 'max-w-[100px] break-all' },
+          { title: 'ID', dataIndex: 'id' },
           {
             title: 'Version',
             dataIndex: 'version',
@@ -58,7 +58,7 @@ export default function ProductVersionCard({ product }: TProps) {
               modalData: null,
             });
             if (!refresh) return;
-            queryClient.invalidateQueries({ queryKey: [PRODUCT_VERSIONS_QUERY_KEY] });
+            queryClient.invalidateQueries({ queryKey: [PRODUCT_DETAIL_QUERY_KEY] });
           }}
         />
       )}
