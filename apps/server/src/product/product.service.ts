@@ -16,7 +16,7 @@ export class ProductService {
   }
 
   findOne(uuid: string) {
-    return this.productRepository.findOneBy({ id: uuid });
+    return this.productRepository.findOne({ where: { id: uuid }, relations: ['productVersions'] });
   }
 
   create(createProductDTO: CreateProductDTO) {

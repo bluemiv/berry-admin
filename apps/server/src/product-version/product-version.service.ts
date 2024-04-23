@@ -17,12 +17,6 @@ export class ProductVersionService {
     return this.productVersionRepository.find();
   }
 
-  async findAllByProductId(productId: string) {
-    const product = await this.productService.findOne(productId);
-    console.log(product, await this.productVersionRepository.find({ relations: ['product'] }));
-    return this.productVersionRepository.find();
-  }
-
   async createVersion(createProductVersionDTO: CreateProductVersionDTO) {
     const product = await this.productService.findOne(createProductVersionDTO.productId);
     const createdData = this.productVersionRepository.create({
