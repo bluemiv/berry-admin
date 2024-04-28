@@ -22,6 +22,11 @@ export default function GlobalNavigationBar() {
           icon: <Icons.BarChart />,
         },
         {
+          label: 'User Management',
+          href: ROUTE_PATH.USER_MANAGEMENT,
+          icon: <Icons.People />,
+        },
+        {
           label: 'Product Management',
           href: ROUTE_PATH.PRODUCT_MANAGEMENT,
           icon: <Icons.Boxes />,
