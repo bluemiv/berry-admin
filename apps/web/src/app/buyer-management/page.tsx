@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import dayjs from 'dayjs';
 import { Button, Card } from '@/components';
 import { Table } from '@/components';
@@ -8,7 +7,7 @@ import { DATE_FORMAT } from '@/constants';
 import { PRODUCTS_QUERY_KEY, useProductsQuery } from '@/features/product/hooks';
 import { useModal } from '@/hooks';
 import { useQueryClient } from '@tanstack/react-query';
-import { AddUserModal } from '@/features/user/components';
+import { AddBuyerModal } from '@/features/buyer/components';
 
 export default function Page() {
   const [addUserModal, setAddProductModal] = useModal();
@@ -18,10 +17,10 @@ export default function Page() {
 
   return (
     <main className="flex flex-col gap-md">
-      <Card title="Users">
+      <Card title="Buyer">
         <div className="flex justify-end mb-md">
           <Button type="primary" onClick={() => setAddProductModal({ visible: true })}>
-            + Add user
+            + Add buyer
           </Button>
         </div>
         <Table
@@ -29,7 +28,7 @@ export default function Page() {
           columns={[
             { title: 'ID', dataIndex: 'id' },
             {
-              title: 'ProductName',
+              title: 'BuyerName',
               dataIndex: 'name',
               render: (name, record) => (
                 <Button type="link" onClick={console.log}>
@@ -38,14 +37,16 @@ export default function Page() {
               ),
             },
             {
+              title: 'Email',
+              dataIndex: 'email',
+            },
+            {
               title: 'CreatedAt',
-              key: 'createdAt',
               dataIndex: 'createdAt',
               render: (date) => dayjs(date).format(DATE_FORMAT.DATE),
             },
             {
               title: 'UpdatedAt',
-              key: 'updatedAt',
               dataIndex: 'updatedAt',
               render: (date) => dayjs(date).format(DATE_FORMAT.DATE),
             },
@@ -54,7 +55,7 @@ export default function Page() {
         />
       </Card>
       {addUserModal.visible && (
-        <AddUserModal
+        <AddBuyerModal
           visible={addUserModal.visible}
           onClose={(refresh) => {
             setAddProductModal({ visible: false, modalData: null });

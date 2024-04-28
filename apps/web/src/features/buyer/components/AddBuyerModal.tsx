@@ -5,26 +5,32 @@ import { TPropsWithModal } from '@/types';
 
 interface TProps {}
 
-export default function AddUserModal({ visible, onClose }: TPropsWithModal<TProps>) {
+export default function AddBuyerModal({ visible, onClose }: TPropsWithModal<TProps>) {
   const { handleSubmit, register } = useForm();
 
   return (
     <Modal
-      title="User 추가"
+      title="Buyer 추가"
       visible={visible}
       onClose={() => onClose(false)}
       onOk={handleSubmit(async (formParams) => {
-        const userName = formParams.userName?.trim();
-        if (!userName) return;
+        const [name, email] = [formParams.name, formParams.email].map((v) => v?.trim());
+        if (!name) return;
 
         onClose(true);
       })}
     >
-      <form>
+      <form className="flex flex-col gap-md">
         <Input
           className="[&_input]:w-full [&_label]:min-w-[80px]"
           label="고객명"
-          {...register('userName')}
+          {...register('name')}
+        />
+        <Input
+          className="[&_input]:w-full [&_label]:min-w-[80px]"
+          type="email"
+          label="이메일"
+          {...register('email')}
         />
       </form>
     </Modal>

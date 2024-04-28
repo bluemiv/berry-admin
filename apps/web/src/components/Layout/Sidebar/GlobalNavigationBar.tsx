@@ -2,7 +2,7 @@
 
 import { ReactNode } from 'react';
 import Link from 'next/link';
-import { ROUTE_PATH } from '@/constants';
+import { ROUTE_PATH, ROUTE_PATH_NAME } from '@/constants';
 import { Icons } from '@/components';
 import { usePathname } from 'next/navigation';
 import classNames from 'classnames';
@@ -17,13 +17,13 @@ export default function GlobalNavigationBar() {
       {[
         { label: 'Main Dashboard', href: ROUTE_PATH.DASHBOARD, icon: <Icons.Home /> },
         {
-          label: 'Data Analytics',
+          label: ROUTE_PATH_NAME[ROUTE_PATH.ANALYTICS],
           href: ROUTE_PATH.ANALYTICS,
           icon: <Icons.BarChart />,
         },
         {
-          label: 'User Management',
-          href: ROUTE_PATH.USER_MANAGEMENT,
+          label: ROUTE_PATH_NAME[ROUTE_PATH.BUYER_MANAGEMENT],
+          href: ROUTE_PATH.BUYER_MANAGEMENT,
           icon: <Icons.People />,
         },
         {
