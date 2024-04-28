@@ -29,7 +29,11 @@ export default function AddProductVersionModal({
       })}
     >
       <form>
-        <Input label="버전" {...register('version')} />
+        <Input
+          className="[&_input]:w-full [&_label]:min-w-[80px]"
+          label="버전"
+          {...register('version')}
+        />
       </form>
     </Modal>
   );

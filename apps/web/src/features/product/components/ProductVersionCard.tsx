@@ -22,7 +22,7 @@ export default function ProductVersionCard({ product }: TProps) {
     <Card title={`'${product?.name}' Versions`}>
       <div className="flex justify-end mb-md">
         <Button type="primary" onClick={() => setAddVersionModal({ visible: true })}>
-          + Add Version
+          + Add version
         </Button>
       </div>
       <Table

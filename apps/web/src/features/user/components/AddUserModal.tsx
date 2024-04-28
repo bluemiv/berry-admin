@@ -2,31 +2,29 @@ import { useForm } from 'react-hook-form';
 import Input from '@/components/Input';
 import { Modal } from '@/components';
 import { TPropsWithModal } from '@/types';
-import { useAddProductMutation } from '@/features/product/hooks';
 
 interface TProps {}
 
-export default function AddProductModal({ visible, onClose }: TPropsWithModal<TProps>) {
+export default function AddUserModal({ visible, onClose }: TPropsWithModal<TProps>) {
   const { handleSubmit, register } = useForm();
-  const { mutateAsync: createProduct } = useAddProductMutation();
 
   return (
     <Modal
-      title="Product 추가"
+      title="User 추가"
       visible={visible}
       onClose={() => onClose(false)}
       onOk={handleSubmit(async (formParams) => {
-        const productName = formParams.productName?.trim();
-        if (!productName) return;
-        await createProduct(productName);
+        const userName = formParams.userName?.trim();
+        if (!userName) return;
+
         onClose(true);
       })}
     >
       <form>
         <Input
           className="[&_input]:w-full [&_label]:min-w-[80px]"
-          label="제품명"
-          {...register('productName')}
+          label="고객명"
+          {...register('userName')}
         />
       </form>
     </Modal>

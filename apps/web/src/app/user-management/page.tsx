@@ -7,22 +7,21 @@ import { Table } from '@/components';
 import { DATE_FORMAT } from '@/constants';
 import { PRODUCTS_QUERY_KEY, useProductsQuery } from '@/features/product/hooks';
 import { useModal } from '@/hooks';
-import { AddProductModal, ProductVersionCard } from '@/features/product/components';
 import { useQueryClient } from '@tanstack/react-query';
+import { AddUserModal } from '@/features/user/components';
 
 export default function Page() {
-  const [selectedProduct, setSelectedProduct] = useState<{ [key: string]: any } | null>(null);
-  const [addProductModal, setAddProductModal] = useModal();
+  const [addUserModal, setAddProductModal] = useModal();
 
   const { data: productsRes } = useProductsQuery();
   const queryClient = useQueryClient();
 
   return (
     <main className="flex flex-col gap-md">
-      <Card title="Products">
+      <Card title="Users">
         <div className="flex justify-end mb-md">
           <Button type="primary" onClick={() => setAddProductModal({ visible: true })}>
-            + Add product
+            + Add user
           </Button>
         </div>
         <Table
@@ -33,7 +32,7 @@ export default function Page() {
               title: 'ProductName',
               dataIndex: 'name',
               render: (name, record) => (
-                <Button type="link" onClick={() => setSelectedProduct(record)}>
+                <Button type="link" onClick={console.log}>
                   {name}
                 </Button>
               ),
@@ -54,10 +53,9 @@ export default function Page() {
           dataSource={productsRes?.results || []}
         />
       </Card>
-      <ProductVersionCard product={selectedProduct} />
-      {addProductModal.visible && (
-        <AddProductModal
-          visible={addProductModal.visible}
+      {addUserModal.visible && (
+        <AddUserModal
+          visible={addUserModal.visible}
           onClose={(refresh) => {
             setAddProductModal({ visible: false, modalData: null });
             if (!refresh) return;
