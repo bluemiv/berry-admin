@@ -1,7 +1,6 @@
 {
   "name": "berry-admin",
-  "version": "1.0.0",
-  "main": "index.js",
+  "packageManager": "yarn@4.3.1",
   "repository": "https://github.com/bluemiv/berry-admin.git",
   "author": "taehongkim <public.bluemiv@gmail.com>",
   "license": "MIT",
@@ -11,23 +10,16 @@
     "packages/**/*"
   ],
   "scripts": {
-    "dev": "yarn db:up && concurrently \"yarn web dev\" \"yarn server start:dev\"",
-    "start": "yarn db:up && concurrently \"yarn web build && yarn web start\" \"yarn server start:prod\"",
-    "db:down": "docker-compose down",
-    "db:up": "yarn db:down && docker-compose up -d",
     "web": "yarn workspace @berry-admin/web",
     "server": "yarn workspace @berry-admin/server"
   },
-  "devDependencies": {
-    "@types/node": "^20.3.1",
-    "concurrently": "^8.2.2",
-    "eslint": "^8.42.0",
-    "prettier": "^3.2.5",
-    "typescript": "^5.1.3"
+  "engines": {
+    "node": ">=20"
   },
   "dependencies": {
-    "@types/lodash": "^4.17.0",
-    "dayjs": "^1.11.10",
-    "lodash": "^4.17.21"
+    "dayjs": "^1.11.11"
+  },
+  "devDependencies": {
+    "prettier": "^3.3.2"
   }
 }
