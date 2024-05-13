@@ -1,7 +1,7 @@
 import React from 'react';
 
 function App() {
-  return <div>berry admin</div>;
+  return <div className="text-center">berry admin</div>;
 }
 
 export default App;
