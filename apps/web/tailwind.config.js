@@ -12,6 +12,10 @@ const space = {
   xl: '3rem',
 };
 
+const width = {
+  sidebar: '330px',
+};
+
 const height = {
   header: '60px',
   footer: '150px',
@@ -93,6 +97,9 @@ module.exports = {
       height,
       minHeight: { ...height },
       maxHeight: { ...height },
+      width,
+      minWidth: { ...width },
+      maxWidth: { ...width },
       colors,
     },
   },
