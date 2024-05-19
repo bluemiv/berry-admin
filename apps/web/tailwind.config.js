@@ -18,8 +18,8 @@ const width = {
 
 const height = {
   header: '60px',
-  footer: '150px',
-  contents: 'calc(100vh - 210px)',
+  footer: '120px',
+  contents: 'calc(100vh - 180px)',
 };
 
 const colors = {

@@ -1,6 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { ROUTE_PATH } from '@/routes';
+import NavItem from './NavItem';
 
 const Nav = () => {
   return (
@@ -10,14 +10,7 @@ const Nav = () => {
           { label: 'Dashboard', href: ROUTE_PATH.DASHBOARD },
           { label: 'Product', href: ROUTE_PATH.PRODUCT },
         ].map(({ label, href }) => (
-          <li key={href} className="w-full">
-            <Link
-              to={href}
-              className="flex items-center rounded py-xs px-lg w-full hover:bg-primary hover:text-white transition ease-in-out duration-150"
-            >
-              {label}
-            </Link>
-          </li>
+          <NavItem key={href} label={label} href={href} />
         ))}
       </ul>
     </nav>
