@@ -4,7 +4,7 @@ import Nav from './Nav';
 
 const Sidebar = () => {
   return (
-    <aside className="min-w-sidebar w-sidebar h-screen p-md sticky top-0">
+    <aside className="min-w-sidebar w-sidebar h-screen p-md sticky top-0 flex flex-col gap-lg">
       <Logo />
       <Nav />
     </aside>
