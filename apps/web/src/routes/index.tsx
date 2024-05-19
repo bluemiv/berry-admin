@@ -3,6 +3,7 @@ import { BaseLayout } from '@/layout';
 
 export const ROUTE_PATH = {
   ROOT: '/',
+  PRODUCT: '/product',
 } as const;
 
 export const router = createBrowserRouter([

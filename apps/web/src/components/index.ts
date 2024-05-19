@@ -1,3 +1,4 @@
-import LinkButton from '@/components/LinkButton';
+import LinkButton from './LinkButton';
+import SolidButton from './SolidButton';
 
-export { LinkButton };
+export { LinkButton, SolidButton };
