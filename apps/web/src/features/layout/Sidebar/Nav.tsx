@@ -7,7 +7,7 @@ const Nav = () => {
     <nav className="w-full">
       <ul className="flex flex-col gap-md w-full">
         {[
-          { label: 'Home', href: ROUTE_PATH.ROOT },
+          { label: 'Dashboard', href: ROUTE_PATH.DASHBOARD },
           { label: 'Product', href: ROUTE_PATH.PRODUCT },
         ].map(({ label, href }) => (
           <li key={href} className="w-full">
