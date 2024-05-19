@@ -7,7 +7,6 @@ export const ROUTE_PATH = {
 
 export const router = createBrowserRouter([
   {
-    path: ROUTE_PATH.ROOT,
     element: <BaseLayout />,
     children: [
       {
