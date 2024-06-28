@@ -10,8 +10,11 @@
     "packages/**/*"
   ],
   "scripts": {
+    "start": "yarn concurrently \"yarn start:db\" \"yarn web start\" \"yarn server start:dev\"",
     "web": "yarn workspace @berry-admin/web",
-    "server": "yarn workspace @berry-admin/server"
+    "server": "yarn workspace @berry-admin/server",
+    "start:db": "yarn stop:db && docker-compose up -d",
+    "stop:db": "docker-compose down"
   },
   "engines": {
     "node": ">=20"
@@ -20,6 +23,7 @@
     "dayjs": "^1.11.11"
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "prettier": "^3.3.2"
   }
 }
