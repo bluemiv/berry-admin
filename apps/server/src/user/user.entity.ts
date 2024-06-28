@@ -1,6 +1,6 @@
 import { Entity, Column, OneToMany } from 'typeorm';
-import { CommonEntity } from '../common/entities/CommonEntity';
 import { Order } from '../order/order.entity';
+import { CommonEntity } from '../common/entities/common-entity';
 
 @Entity()
 export class User extends CommonEntity {
