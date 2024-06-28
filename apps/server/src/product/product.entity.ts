@@ -1,5 +1,6 @@
 import { CommonEntity } from '../common/entities/common-entity';
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
+import { ProductVersion } from './product-version.entity';
 
 @Entity()
 export class Product extends CommonEntity {
@@ -8,4 +9,9 @@ export class Product extends CommonEntity {
 
   @Column({ nullable: true })
   description: string;
+
+  @OneToMany(() => ProductVersion, (productVersion) => productVersion.product, {
+    cascade: true,
+  })
+  versions: ProductVersion[];
 }
