@@ -4,11 +4,13 @@ import { User } from './user.entity';
 import { Like, Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserDto } from './dto/find-user.dto';
+import { Order } from '../order/order.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private userRepository: Repository<User>,
+    @InjectRepository(Order) private orderRepository: Repository<Order>,
   ) {}
 
   createUser(createUserDto: CreateUserDto) {
@@ -31,6 +33,7 @@ export class UserService {
       where,
       take: limit,
       skip: (page - 1) * limit,
+      relations: ['orders'],
     });
 
     return { data, count };
