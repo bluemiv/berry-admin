@@ -32,6 +32,7 @@ export class ProductService {
       where,
       take: limit,
       skip: (page - 1) * limit,
+      relations: ['versions'],
     });
     return { data, count };
   }
