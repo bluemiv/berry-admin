@@ -1,3 +1,4 @@
 import LinkButton from './LinkButton';
+import TableField from './TableField';
 
-export { LinkButton };
+export { LinkButton, TableField };

@@ -2,11 +2,16 @@ import { Table } from 'antd';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ROUTE_PATH } from '@/routes';
+import { useProductsQuery } from '@/queryHooks';
+import { TableField } from '@/components';
 
 const ProductTable = () => {
+  const { data: productsRes } = useProductsQuery();
+
   return (
     <Table
       rowKey="id"
+      pagination={{ total: productsRes?.count || 0 }}
       columns={[
         { title: '#', dataIndex: 'id' },
         {
@@ -17,33 +22,18 @@ const ProductTable = () => {
         { title: '상세 내용', dataIndex: 'description' },
         { title: '최종 버전', dataIndex: 'lastVersion' },
         { title: '최근 배포일', dataIndex: 'lastReleasAt' },
-        { title: '최근 수정일', dataIndex: 'updatedAt' },
+        {
+          title: '최근 수정일',
+          dataIndex: 'updatedAt',
+          render: (date) => <TableField.FullDate date={date} />,
+        },
         {
           title: '생성일',
           dataIndex: 'createdAt',
+          render: (date) => <TableField.FullDate date={date} />,
         },
       ]}
-      dataSource={[
-        // TODO api 호출로 변경
-        {
-          id: 1,
-          name: 'Berry Skin',
-          description: 'Tistory berry skin',
-          lastVersion: '4.0.1',
-          lastReleasAt: '2024-06-11 11:11:11',
-          createdAt: '2023-11-11 11:11:11',
-          updatedAt: '2023-11-11 11:11:11',
-        },
-        {
-          id: 2,
-          name: 'Minimal Skin',
-          description: 'Tistory minimal skin',
-          lastVersion: '1.0.0',
-          lastReleasAt: '2024-06-11 11:11:11',
-          createdAt: '2023-11-11 11:11:11',
-          updatedAt: '2023-11-11 11:11:11',
-        },
-      ]}
+      dataSource={productsRes?.data || []}
     />
   );
 };
