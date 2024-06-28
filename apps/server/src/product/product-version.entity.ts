@@ -2,7 +2,7 @@ import { CommonEntity } from '../common/entities/common-entity';
 import { Column, Entity, ManyToOne } from 'typeorm';
 import { Product } from './product.entity';
 
-@Entity()
+@Entity({ orderBy: { id: 'DESC' } })
 export class ProductVersion extends CommonEntity {
   @Column({ nullable: false })
   version: string;

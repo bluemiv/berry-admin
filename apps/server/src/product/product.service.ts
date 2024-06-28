@@ -49,6 +49,7 @@ export class ProductService {
     const { limit, page } = findProductVersionDto;
     const [data, count] = await this.productVersionRepository.findAndCount({
       where: { product: { id: productId } },
+      order: { id: 'DESC' },
       take: limit,
       skip: (page - 1) * limit,
       relations: ['product'],

@@ -10,7 +10,7 @@ interface TProps {
 const FullDateTableField = ({ date, className }: TPropsWithClassName<TProps>) => {
   return (
     <span className={className}>
-      {dayjs(date).isValid() ? dayjs(date).format(DATE_FORMAT.FULL_DATE) : NO_DATA}
+      {!!date && dayjs(date).isValid() ? dayjs(date).format(DATE_FORMAT.FULL_DATE) : NO_DATA}
     </span>
   );
 };

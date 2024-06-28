@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ROUTE_PATH } from '@/routes';
 import { useProductsQuery } from '@/queryHooks';
 import { TableField } from '@/components';
+import { NO_DATA } from '@/constants';
 
 const ProductTable = () => {
   const { data: productsRes } = useProductsQuery();
@@ -20,8 +21,18 @@ const ProductTable = () => {
           render: (name, record) => <ProdcutNameField name={name} id={record.id} />,
         },
         { title: '상세 내용', dataIndex: 'description' },
-        { title: '최종 버전', dataIndex: 'lastVersion' },
-        { title: '최근 배포일', dataIndex: 'lastReleasAt' },
+        {
+          title: '최종 버전',
+          key: 'lastVersion',
+          dataIndex: '',
+          render: (record) => record?.versions?.[0]?.version || NO_DATA,
+        },
+        {
+          title: '최근 배포일',
+          key: 'lastReleaseAt',
+          dataIndex: '',
+          render: (record) => <TableField.FullDate date={record?.versions?.[0]?.releaseAt} />,
+        },
         {
           title: '최근 수정일',
           dataIndex: 'updatedAt',

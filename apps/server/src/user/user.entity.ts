@@ -2,7 +2,7 @@ import { Entity, Column, OneToMany } from 'typeorm';
 import { Order } from '../order/order.entity';
 import { CommonEntity } from '../common/entities/common-entity';
 
-@Entity()
+@Entity({ orderBy: { id: 'DESC' } })
 export class User extends CommonEntity {
   @Column({ nullable: false })
   name: string;

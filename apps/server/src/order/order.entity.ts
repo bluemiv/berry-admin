@@ -2,7 +2,7 @@ import { Column, Entity, ManyToOne } from 'typeorm';
 import { User } from '../user/user.entity';
 import { CommonEntity } from '../common/entities/common-entity';
 
-@Entity()
+@Entity({ orderBy: { id: 'DESC' } })
 export class Order extends CommonEntity {
   @Column()
   price: number;
