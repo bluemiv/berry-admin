@@ -9,6 +9,14 @@ const productApi = {
     url: '/product',
     params,
   }),
+  /**
+   * Skin product를 등록하는 API
+   * @param params
+   */
+  createProduct: (params: { name: string; description: string }) => ({
+    url: '/product',
+    params,
+  }),
 };
 
 export default productApi;
