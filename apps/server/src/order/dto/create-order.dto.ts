@@ -1,18 +1,24 @@
-import { IsNotEmpty, IsNumber } from 'class-validator';
 import { Type } from 'class-transformer';
-import { Product } from '../../product/product.entity';
-import { ProductVersion } from '../../product/product-version.entity';
+import { IsNotEmpty, IsNumber } from 'class-validator';
 
 export class CreateOrderDto {
   @IsNotEmpty()
   @IsNumber()
+  @Type(() => Number)
+  userId: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  @Type(() => Number)
   price: number;
 
   @IsNotEmpty()
-  @Type(() => Product)
-  product: Product;
+  @IsNumber()
+  @Type(() => Number)
+  productId: number;
 
   @IsNotEmpty()
-  @Type(() => ProductVersion)
-  productVersion: ProductVersion;
+  @IsNumber()
+  @Type(() => Number)
+  productVersionId: number;
 }

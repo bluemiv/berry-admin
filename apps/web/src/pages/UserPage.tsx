@@ -10,7 +10,7 @@ const UserPage = () => {
         <Card title="이번달 구매자 수">20명</Card>
         <Card title="전달 구매자 수">14명</Card>
       </div>
-      <Card title="사용자">
+      <Card title="구매자 목록">
         <div className="flex flex-col gap-md">
           <UserTableActions />
           <UserTable />

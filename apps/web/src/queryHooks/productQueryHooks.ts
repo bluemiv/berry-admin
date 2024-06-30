@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { apiCaller } from '@/utils';
-import productApi from '@/api/productApi';
+import { productApi } from '@/api';
 import { TPropsWithPaginationQuery } from '@/types';
 import { TProduct } from '@/features/product';
 

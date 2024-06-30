@@ -2,7 +2,12 @@ import React from 'react';
 import { Form, Input, Modal, Select } from 'antd';
 import { useQueryClient } from '@tanstack/react-query';
 import { FORM_RULES } from '@/constants';
-import { useCreateUserMutation, useProductsQuery, USERS_QUERY_KEY } from '@/queryHooks';
+import {
+  useCreateOrderMutation,
+  useCreateUserMutation,
+  useProductsQuery,
+  USERS_QUERY_KEY,
+} from '@/queryHooks';
 
 interface TProps {
   open: boolean;
@@ -17,6 +22,7 @@ const CreateUserModal = ({ open, onClose }: TProps) => {
 
   const { data: products } = useProductsQuery();
   const { mutateAsync: createUser } = useCreateUserMutation();
+  const { mutateAsync: createOrder } = useCreateOrderMutation();
 
   const onSubmit = async (formParams: {
     name: string;
@@ -25,9 +31,19 @@ const CreateUserModal = ({ open, onClose }: TProps) => {
     productVersionId: number;
     price: number;
   }) => {
-    await createUser({ name: formParams.name.trim(), email: formParams?.email?.trim() });
+    const user = await createUser({
+      name: formParams.name.trim(),
+      email: formParams?.email?.trim(),
+    });
+
+    await createOrder({
+      userId: user.id,
+      productId: formParams.productId,
+      productVersionId: formParams.productVersionId,
+      price: formParams.price,
+    });
+
     await queryClient.invalidateQueries({ queryKey: USERS_QUERY_KEY });
-    
     return onClose({ refresh: true });
   };
 
