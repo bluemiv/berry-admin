@@ -1,3 +1,4 @@
+import { NotFoundError } from 'rxjs';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from './product.entity';
@@ -5,7 +6,6 @@ import { Like, Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductDto } from './dto/find-product.dto';
 import { ProductVersion } from './product-version.entity';
-import { NotFoundError } from 'rxjs';
 import { CreateProductVersionDto } from './dto/create-product-version.dto';
 import { FindProductVersionDto } from './dto/find-product-version.dto';
 import { UpdateProductVersionDto } from './dto/update-product-version.dto';
@@ -22,7 +22,7 @@ export class ProductService {
     const product = await this.productRepository.findOne({
       where: { id: productId },
       order: { versions: { id: 'DESC' } },
-      relations: ['versions'],
+      relations: ['versions', 'versions.orders', 'orders'],
     });
     if (!product) {
       throw new NotFoundError(`Product not found. product id: ${productId}`);

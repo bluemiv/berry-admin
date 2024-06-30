@@ -1,3 +1,5 @@
+import { TOrder } from '@/features/order';
+
 export type TProduct = {
   id: number;
   name: string;
@@ -5,6 +7,7 @@ export type TProduct = {
   createdAt: string;
   updatedAt: string;
   versions?: TProductVersion[];
+  orders?: TOrder[];
 };
 
 export type TProductVersion = {
@@ -13,4 +16,5 @@ export type TProductVersion = {
   createdAt: string;
   releaseAt?: string | null;
   updatedAt: string;
+  orders?: TOrder[];
 };

@@ -10,6 +10,8 @@ import {
 } from '@/queryHooks';
 import { TableField } from '@/components';
 import { DATE_FORMAT } from '@/constants';
+import { TOrder } from '@/features/order';
+import { toMoneyFormat } from '@/utils';
 
 interface TProps {
   productId: number;
@@ -50,8 +52,22 @@ const ProductVersionTable = ({ productId }: TProps) => {
           dataIndex: 'releaseAt',
           render: (date) => <TableField.FullDate date={date} />,
         },
-        { title: '다운로드수', dataIndex: 'downloadCount' },
-        { title: '총 판매 금액', dataIndex: 'totalPrice' },
+        {
+          title: '다운로드수',
+          dataIndex: 'orders',
+          key: 'download',
+          render: (orders) => `${orders?.length || 0}건`,
+        },
+        {
+          title: '총 판매 금액',
+          dataIndex: 'orders',
+          key: 'price',
+          render: (orders: TOrder[]) =>
+            toMoneyFormat(
+              orders?.reduce((acc, order) => acc + order.price, 0),
+              { suffix: '원' },
+            ),
+        },
         {
           title: '최근 수정일',
           dataIndex: 'updatedAt',

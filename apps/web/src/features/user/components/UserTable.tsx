@@ -1,12 +1,12 @@
 import React from 'react';
 import { Table, Tag } from 'antd';
 import { Link } from 'react-router-dom';
+import dayjs from 'dayjs';
 import { useUsersQuery } from '@/queryHooks';
 import { ROUTE_PATH } from '@/routes';
 import { DATE_FORMAT, NO_DATA } from '@/constants';
 import { TOrder } from '@/features/order';
 import { toMoneyFormat } from '@/utils';
-import dayjs from 'dayjs';
 
 const UserTable = () => {
   const { data: users } = useUsersQuery();

@@ -16,7 +16,7 @@ export const useProductQuery = (productId: number) =>
     queryFn: async () => {
       const { url } = productApi.getProduct(productId);
       const { data } = await apiCaller.get(url);
-      return data;
+      return data as TProduct;
     },
     enabled: !!productId,
   });
