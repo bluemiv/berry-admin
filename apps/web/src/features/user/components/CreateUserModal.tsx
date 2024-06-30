@@ -70,7 +70,12 @@ const CreateUserModal = ({ open, onClose }: TProps) => {
       onOk={() => form.submit()}
       onCancel={() => onClose()}
     >
-      <Form form={form} colon={false} onFinish={onSubmit}>
+      <Form
+        form={form}
+        colon={false}
+        onFinish={onSubmit}
+        initialValues={{ productId: products?.data?.[0]?.id, price: 5000, marketingEmail: true }}
+      >
         <Form.Item name="name" label="성함" required rules={[FORM_RULES.REQUIRED]}>
           <Input placeholder="구매자의 성함을 입력해주세요." />
         </Form.Item>
