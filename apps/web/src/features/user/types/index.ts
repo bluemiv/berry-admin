@@ -7,4 +7,5 @@ export type TUser = {
   createdAt: string;
   updatedAt: string;
   orders?: TOrder[];
+  marketingEmail: boolean;
 };
