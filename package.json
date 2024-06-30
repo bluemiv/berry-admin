@@ -10,7 +10,7 @@
     "packages/**/*"
   ],
   "scripts": {
-    "start": "yarn concurrently \"yarn start:db\" \"yarn web start\" \"yarn server start:dev\"",
+    "start": "yarn start:db && yarn concurrently \"yarn web start\" \"yarn server start:dev\"",
     "web": "yarn workspace @berry-admin/web",
     "server": "yarn workspace @berry-admin/server",
     "start:db": "yarn stop:db && docker-compose up -d",
