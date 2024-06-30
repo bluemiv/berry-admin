@@ -1,5 +1,5 @@
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsOptional } from 'class-validator';
 
 export class CreateOrderDto {
   @IsNotEmpty()
@@ -11,6 +11,9 @@ export class CreateOrderDto {
   @IsNumber()
   @Type(() => Number)
   price: number;
+
+  @IsOptional()
+  orderAt: Date;
 
   @IsNotEmpty()
   @IsNumber()

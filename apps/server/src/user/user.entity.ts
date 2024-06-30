@@ -10,6 +10,9 @@ export class User extends CommonEntity {
   @Column({ nullable: true })
   email: string;
 
+  @Column()
+  marketingEmail: boolean = false;
+
   @OneToMany(() => Order, (order) => order.user, { cascade: true })
   orders: Order[];
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './user.entity';
-import { Like, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { FindUserDto } from './dto/find-user.dto';
 import { Order } from '../order/order.entity';
@@ -23,10 +23,10 @@ export class UserService {
 
     const where = {};
     if (!!name) {
-      where['name'] = Like(`%${name}%`);
+      where['name'] = name;
     }
     if (!!email) {
-      where['email'] = Like(`%${email}%`);
+      where['email'] = email;
     }
 
     const [data, count] = await this.userRepository.findAndCount({

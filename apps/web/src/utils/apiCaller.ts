@@ -15,7 +15,7 @@ const apiCaller = {
       [key: string]: any;
     }>,
     options?: AxiosRequestConfig,
-  ) => instance.get(url, { data: params, ...options }),
+  ) => instance.get(url, { params, ...options }),
   post: (
     url: string,
     params?: {

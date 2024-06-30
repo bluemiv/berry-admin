@@ -57,6 +57,7 @@ export class OrderService {
         user,
         product,
         productVersion,
+        orderAt: createOrderDto?.orderAt || new Date(),
         price: createOrderDto.price,
       });
       await queryRunner.manager.save(order);

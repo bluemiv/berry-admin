@@ -1,11 +1,4 @@
-import {
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  ValidateNested,
-} from 'class-validator';
-import { CreateOrderDto } from '../../order/dto/create-order.dto';
-import { Type } from 'class-transformer';
+import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -15,8 +8,6 @@ export class CreateUserDto {
   @IsOptional()
   email?: string;
 
-  // @IsNotEmpty()
-  // @ValidateNested({ each: true })
-  // @Type(() => CreateOrderDto)
-  // orders: CreateOrderDto[];
+  @IsOptional()
+  marketingEmail: boolean = false;
 }

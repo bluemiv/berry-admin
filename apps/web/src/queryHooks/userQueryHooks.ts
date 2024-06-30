@@ -12,7 +12,10 @@ export const USERS_QUERY_KEY = [PREFIX, 'USERS'];
  * user 목록을 조회하는 Query
  * @param searchParams
  */
-export const useUsersQuery = (searchParams?: TPropsWithPaginationQuery) =>
+export const useUsersQuery = (
+  searchParams?: TPropsWithPaginationQuery<{ name?: string; email?: string }>,
+  options?: { [key: string]: any },
+) =>
   useQuery({
     queryKey: [...USERS_QUERY_KEY, searchParams],
     queryFn: async () => {
@@ -20,6 +23,7 @@ export const useUsersQuery = (searchParams?: TPropsWithPaginationQuery) =>
       const { data } = await apiCaller.get(url, params);
       return data as { count: number; data: TUser[] };
     },
+    ...options,
   });
 
 /**
@@ -27,8 +31,16 @@ export const useUsersQuery = (searchParams?: TPropsWithPaginationQuery) =>
  */
 export const useCreateUserMutation = () =>
   useMutation({
-    mutationFn: async ({ name, email }: { name: string; email?: string }) => {
-      const { url, params } = userApi.createUser({ name, email });
+    mutationFn: async ({
+      name,
+      email,
+      marketingEmail,
+    }: {
+      name: string;
+      email?: string;
+      marketingEmail: boolean;
+    }) => {
+      const { url, params } = userApi.createUser({ name, email, marketingEmail });
       const { data } = await apiCaller.post(url, params);
       return data;
     },

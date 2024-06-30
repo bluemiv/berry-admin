@@ -5,6 +5,7 @@ export type TOrder = {
   price: number;
   createdAt: string;
   updatedAt: string;
+  orderAt: string;
   product: TProduct;
   productVersion: TProductVersion;
 };

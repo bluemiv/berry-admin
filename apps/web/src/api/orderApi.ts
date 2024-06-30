@@ -8,6 +8,7 @@ const orderApi = {
     price: number;
     productId: number;
     productVersionId: number;
+    orderAt?: string | null;
   }) => ({
     url: '/order',
     params,

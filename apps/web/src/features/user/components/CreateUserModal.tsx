@@ -1,12 +1,14 @@
 import React from 'react';
-import { Form, Input, Modal, Select } from 'antd';
+import { DatePicker, Form, Input, Modal, Radio, Select } from 'antd';
+import { Dayjs } from 'dayjs';
 import { useQueryClient } from '@tanstack/react-query';
-import { FORM_RULES } from '@/constants';
+import { DATE_FORMAT, FORM_RULES } from '@/constants';
 import {
   useCreateOrderMutation,
   useCreateUserMutation,
   useProductsQuery,
   USERS_QUERY_KEY,
+  useUsersQuery,
 } from '@/queryHooks';
 
 interface TProps {
@@ -15,10 +17,14 @@ interface TProps {
 }
 
 const CreateUserModal = ({ open, onClose }: TProps) => {
+  const queryClient = useQueryClient();
+
   const [form] = Form.useForm();
   const productId = Form.useWatch('productId', form);
+  const name = Form.useWatch('name', form);
+  const email = Form.useWatch('email', form);
 
-  const queryClient = useQueryClient();
+  const { refetch: fetchUser } = useUsersQuery({ name, email }, { enabled: false });
 
   const { data: products } = useProductsQuery();
   const { mutateAsync: createUser } = useCreateUserMutation();
@@ -30,17 +36,25 @@ const CreateUserModal = ({ open, onClose }: TProps) => {
     productId: number;
     productVersionId: number;
     price: number;
+    orderAt?: Dayjs;
+    marketingEmail: boolean;
   }) => {
-    const user = await createUser({
-      name: formParams.name.trim(),
-      email: formParams?.email?.trim(),
-    });
+    const { data: createdUserInfo } = await fetchUser();
+    let user = createdUserInfo?.data?.[0];
+    if (!user) {
+      user = await createUser({
+        name: formParams.name.trim(),
+        email: formParams?.email?.trim(),
+        marketingEmail: formParams.marketingEmail,
+      });
+    }
 
     await createOrder({
-      userId: user.id,
+      userId: user!.id,
       productId: formParams.productId,
       productVersionId: formParams.productVersionId,
       price: formParams.price,
+      orderAt: !!formParams?.orderAt ? formParams.orderAt.format(DATE_FORMAT.FULL_DATE) : null,
     });
 
     await queryClient.invalidateQueries({ queryKey: USERS_QUERY_KEY });
@@ -90,6 +104,9 @@ const CreateUserModal = ({ open, onClose }: TProps) => {
               }))}
           />
         </Form.Item>
+        <Form.Item name="orderAt" label="구매 일자">
+          <DatePicker placeholder="구매 일자를 선택해주세요." />
+        </Form.Item>
         <Form.Item name="price" label="구매 금액" required rules={[FORM_RULES.REQUIRED]}>
           <Input
             type="number"
@@ -98,8 +115,18 @@ const CreateUserModal = ({ open, onClose }: TProps) => {
             placeholder="구매자의 이메일을 입력해주세요."
           />
         </Form.Item>
-        <Form.Item name="marketingEmail" label="안내메일 동의">
-          <Input placeholder="구매자의 이메일을 입력해주세요." />
+        <Form.Item
+          name="marketingEmail"
+          label="안내메일 동의"
+          required
+          rules={[FORM_RULES.REQUIRED]}
+        >
+          <Radio.Group
+            options={[
+              { label: '동의', value: true },
+              { label: '거부', value: false },
+            ]}
+          />
         </Form.Item>
       </Form>
     </Modal>

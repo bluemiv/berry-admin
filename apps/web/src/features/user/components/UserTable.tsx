@@ -1,11 +1,12 @@
 import React from 'react';
-import { Table } from 'antd';
+import { Table, Tag } from 'antd';
 import { Link } from 'react-router-dom';
 import { useUsersQuery } from '@/queryHooks';
 import { ROUTE_PATH } from '@/routes';
-import { NO_DATA } from '@/constants';
+import { DATE_FORMAT, NO_DATA } from '@/constants';
 import { TOrder } from '@/features/order';
 import { toMoneyFormat } from '@/utils';
+import dayjs from 'dayjs';
 
 const UserTable = () => {
   const { data: users } = useUsersQuery();
@@ -30,23 +31,26 @@ const UserTable = () => {
         },
         { title: '이메일주소', dataIndex: 'email' },
         {
-          title: '구매 스킨',
+          title: '구매 정보 (스킨/일자)',
           dataIndex: 'orders',
           key: 'product',
           render: (orders: TOrder[]) => {
             if ((orders?.length || 0) === 0) return NO_DATA;
             return (
-              <div>
+              <div className="flex flex-col">
                 {orders?.map((order, idx) => {
                   const product = order.product;
                   const productVersion = order.productVersion;
                   return (
-                    <Link
-                      key={idx}
-                      to={ROUTE_PATH.PRODUCT_DETAIL.replace(':productId', product.id.toString())}
-                    >
-                      {product.name} ({productVersion.version})
-                    </Link>
+                    <div key={idx} className="flex gap-sm">
+                      <Link
+                        to={ROUTE_PATH.PRODUCT_DETAIL.replace(':productId', product.id.toString())}
+                      >
+                        {product.name} ({productVersion.version})
+                      </Link>
+                      <span>/</span>
+                      <span>{dayjs(order.orderAt).format(DATE_FORMAT.DATE)}</span>
+                    </div>
                   );
                 })}
               </div>
@@ -54,18 +58,11 @@ const UserTable = () => {
           },
         },
         {
-          title: '구매 금액',
-          dataIndex: 'orders',
-          key: 'price',
-          render: (orders: TOrder[]) => {
-            if ((orders?.length || 0) === 0) return NO_DATA;
-            return toMoneyFormat(
-              orders.reduce((acc, order) => acc + order.price, 0),
-              { suffix: '원' },
-            );
-          },
+          title: '안내메일 동의',
+          dataIndex: 'marketingEmail',
+          render: (marketingEmail) =>
+            marketingEmail ? <Tag color="green">동의</Tag> : <Tag color="red">거부</Tag>,
         },
-        { title: '안내메일 동의', dataIndex: ['marketing', 'email'] },
       ]}
       dataSource={users?.data || []}
     />

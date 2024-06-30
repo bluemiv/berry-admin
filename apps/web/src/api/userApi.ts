@@ -5,7 +5,7 @@ const userApi = {
    * 사용자 목록을 조회하는 API
    * @param params
    */
-  getUsers: (params?: TPropsWithPaginationQuery) => ({
+  getUsers: (params?: TPropsWithPaginationQuery<{ name?: string; email?: string }>) => ({
     url: '/user',
     params,
   }),
@@ -13,7 +13,7 @@ const userApi = {
    * 사용자 목록을 조회하는 API
    * @param params
    */
-  createUser: (params: { name: string; email?: string }) => ({
+  createUser: (params: { name: string; email?: string; marketingEmail: boolean }) => ({
     url: '/user',
     params,
   }),
