@@ -6,7 +6,7 @@ import { SummaryCard } from '@/components';
 import dayjs from 'dayjs';
 
 const UserPage = () => {
-  const { data: users } = useUsersQuery();
+  const { data: users } = useUsersQuery({ limit: 100 });
 
   const currentMonthUsers = users?.data?.filter((user) => {
     const orderAt = user.orders?.[0]?.orderAt;
