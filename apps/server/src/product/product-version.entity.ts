@@ -7,6 +7,9 @@ export class ProductVersion extends CommonEntity {
   @Column({ nullable: false })
   version: string;
 
+  @Column({ nullable: true, type: 'timestamp' })
+  releaseAt: Date;
+
   @ManyToOne(() => Product, (product) => product.versions)
   product: Product;
 }

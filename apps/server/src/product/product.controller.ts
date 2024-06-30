@@ -4,6 +4,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { FindProductDto } from './dto/find-product.dto';
 import { CreateProductVersionDto } from './dto/create-product-version.dto';
 import { FindProductVersionDto } from './dto/find-product-version.dto';
+import { UpdateProductVersionDto } from './dto/update-product-version.dto';
 
 @Controller('product')
 export class ProductController {
@@ -43,6 +44,17 @@ export class ProductController {
     return this.productService.createVersion(
       productId,
       createProductVersionDto,
+    );
+  }
+
+  @Post('version/:versionId/release')
+  releaseVersion(
+    @Param('versionId') versionId: number,
+    @Body() updateProductVersionDto: UpdateProductVersionDto,
+  ) {
+    return this.productService.releaseVersion(
+      versionId,
+      updateProductVersionDto,
     );
   }
 }

@@ -48,3 +48,15 @@ export const useCreateProductMutation = () =>
       return data;
     },
   });
+
+/**
+ * Skin product version을 배포하는 Mutation
+ */
+export const useReleaseProductVersionMutation = () =>
+  useMutation({
+    mutationFn: async ({ versionId, releaseAt }: { versionId: number; releaseAt?: string }) => {
+      const { url, params } = productApi.releaseVersion(versionId, { releaseAt });
+      const { data } = await apiCaller.post(url, params);
+      return data;
+    },
+  });

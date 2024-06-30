@@ -1,8 +1,8 @@
 import React from 'react';
-import { Card, Table } from 'antd';
+import { Card } from 'antd';
 import { useParams } from 'react-router-dom';
 import { useProductQuery } from '@/queryHooks';
-import { TableField } from '@/components';
+import { ProductVersionTable } from '@/features/product';
 
 const ProductDetailPage = () => {
   const params = useParams();
@@ -17,31 +17,7 @@ const ProductDetailPage = () => {
         <Card title="최근 배포 버전">v1.2.4</Card>
       </div>
       <Card title={`#${product?.id} ${product?.name} 버전`}>
-        <Table
-          rowKey="id"
-          columns={[
-            { title: '#', dataIndex: 'id' },
-            { title: '버전', dataIndex: 'version' },
-            {
-              title: '배포일',
-              dataIndex: 'releaseAt',
-              render: (date) => <TableField.FullDate date={date} />,
-            },
-            { title: '다운로드수', dataIndex: 'downloadCount' },
-            { title: '총 판매 금액', dataIndex: 'totalPrice' },
-            {
-              title: '최근 수정일',
-              dataIndex: 'updatedAt',
-              render: (date) => <TableField.FullDate date={date} />,
-            },
-            {
-              title: '생성일',
-              dataIndex: 'createdAt',
-              render: (date) => <TableField.FullDate date={date} />,
-            },
-          ]}
-          dataSource={product?.versions || []}
-        />
+        <ProductVersionTable productId={Number(productId)} />
       </Card>
     </main>
   );

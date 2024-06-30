@@ -24,6 +24,16 @@ const productApi = {
     url: '/product',
     params,
   }),
+  /**
+   * product의 버전을 배포하는 API
+   * @param versionId product version id
+   * @param params
+   *   releaseAt 배포 날짜
+   */
+  releaseVersion: (versionId: number, params?: { releaseAt?: string }) => ({
+    url: `/product/version/${versionId}/release`,
+    params,
+  }),
 };
 
 export default productApi;

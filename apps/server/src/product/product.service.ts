@@ -8,6 +8,7 @@ import { ProductVersion } from './product-version.entity';
 import { NotFoundError } from 'rxjs';
 import { CreateProductVersionDto } from './dto/create-product-version.dto';
 import { FindProductVersionDto } from './dto/find-product-version.dto';
+import { UpdateProductVersionDto } from './dto/update-product-version.dto';
 
 @Injectable()
 export class ProductService {
@@ -83,5 +84,22 @@ export class ProductService {
       ...createProductVersionDto,
     });
     return this.productVersionRepository.save(version);
+  }
+
+  async releaseVersion(
+    versionId: number,
+    updateProductVersionDto: UpdateProductVersionDto,
+  ) {
+    const productVersion = await this.productVersionRepository.findOne({
+      where: { id: versionId },
+    });
+    if (!productVersion) {
+      throw new NotFoundError(
+        `Product version not found. version id: ${versionId}`,
+      );
+    }
+    const { releaseAt } = updateProductVersionDto;
+    productVersion.releaseAt = releaseAt;
+    return this.productVersionRepository.save(productVersion);
   }
 }
