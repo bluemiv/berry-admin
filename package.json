@@ -14,7 +14,9 @@
     "web": "yarn workspace @berry-admin/web",
     "server": "yarn workspace @berry-admin/server",
     "start:db": "yarn stop:db && docker-compose up -d",
-    "stop:db": "docker-compose down"
+    "stop:db": "docker-compose down",
+    "backup:db": "docker exec -t berry-admin-db pg_dump -U root -d berry-admin-db > berry-admin-db/backup.sql",
+    "restore:db": "docker exec -i berry-admin-db psql -U root -d berry-admin-db < berry-admin-db/backup.sql"
   },
   "engines": {
     "node": ">=20"
