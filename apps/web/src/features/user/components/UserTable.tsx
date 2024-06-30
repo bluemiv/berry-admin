@@ -1,6 +1,6 @@
 import React from 'react';
 import { Table, Tag } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { useUsersQuery } from '@/queryHooks';
 import { ROUTE_PATH } from '@/routes';
@@ -9,12 +9,21 @@ import { TOrder } from '@/features/order';
 import { toMoneyFormat } from '@/utils';
 
 const UserTable = () => {
-  const { data: users } = useUsersQuery();
+  const nav = useNavigate();
+
+  const [searchParams] = useSearchParams();
+  const limit = Number(searchParams.get('limit') || '10');
+  const page = Number(searchParams.get('page') || '1');
+
+  const { data: users } = useUsersQuery({ page, limit });
 
   return (
     <Table
       rowKey="id"
-      pagination={{ total: users?.count || 0 }}
+      pagination={{ total: users?.count || 0, current: page, pageSize: limit }}
+      onChange={(pagination) => {
+        nav(`?page=${pagination.current}&limit=${pagination.pageSize}`);
+      }}
       columns={[
         { title: '#', dataIndex: 'id' },
         {
