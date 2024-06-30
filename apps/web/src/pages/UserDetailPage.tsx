@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button, Card, Descriptions, Table, Tag } from 'antd';
+import dayjs from 'dayjs';
 import { useUserQuery } from '@/queryHooks';
 import { toMoneyFormat } from '@/utils';
-import dayjs from 'dayjs';
 import { DATE_FORMAT } from '@/constants';
 
 const UserDetailPage = () => {
