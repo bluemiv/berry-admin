@@ -19,6 +19,11 @@ export class ProductController {
     return this.productService.create(createProductDto);
   }
 
+  @Get(':id')
+  find(@Param('id') productId: number) {
+    return this.productService.find(productId);
+  }
+
   @Get(':id/version')
   findAllVersions(
     @Param('id') productId: number,

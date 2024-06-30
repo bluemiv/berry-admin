@@ -17,6 +17,17 @@ export class ProductService {
     private productVersionRepository: Repository<ProductVersion>,
   ) {}
 
+  async find(productId: number) {
+    const product = await this.productRepository.findOne({
+      where: { id: productId },
+      relations: ['versions'],
+    });
+    if (!product) {
+      throw new NotFoundError(`Product not found. product id: ${productId}`);
+    }
+    return product;
+  }
+
   async findAll(findProductDto: FindProductDto) {
     const { limit, page, name, description } = findProductDto;
 

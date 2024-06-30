@@ -3,6 +3,13 @@ import { TPropsWithPaginationQuery } from '@/types';
 const productApi = {
   /**
    * Skin Product를 조회하는 API
+   * @param productId product id
+   */
+  getProduct: (productId: number) => ({
+    url: `/product/${productId}`,
+  }),
+  /**
+   * Skin Product를 조회하는 API
    * @param params
    */
   getProducts: (params?: TPropsWithPaginationQuery) => ({

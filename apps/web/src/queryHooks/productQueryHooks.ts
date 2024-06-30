@@ -5,6 +5,21 @@ import { TPropsWithPaginationQuery } from '@/types';
 
 const PREFIX = 'PRODUCT';
 
+export const PRODUCT_QUERY_KEY = [PREFIX, 'PRODUCT'];
+/**
+ * Skin product를 조회하는 Query
+ */
+export const useProductQuery = (productId: number) =>
+  useQuery({
+    queryKey: [...PRODUCT_QUERY_KEY, productId],
+    queryFn: async () => {
+      const { url } = productApi.getProduct(productId);
+      const { data } = await apiCaller.get(url);
+      return data;
+    },
+    enabled: !!productId,
+  });
+
 export const PRODUCTS_QUERY_KEY = [PREFIX, 'PRODUCTS'];
 /**
  * Skin product를 조회하는 Query
