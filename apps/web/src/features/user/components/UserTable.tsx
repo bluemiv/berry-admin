@@ -1,10 +1,11 @@
 import React from 'react';
-import { Table, Tag } from 'antd';
-import { useUsersQuery } from '@/queryHooks';
+import { Table } from 'antd';
 import { Link } from 'react-router-dom';
+import { useUsersQuery } from '@/queryHooks';
 import { ROUTE_PATH } from '@/routes';
 import { NO_DATA } from '@/constants';
 import { TOrder } from '@/features/order';
+import { toMoneyFormat } from '@/utils';
 
 const UserTable = () => {
   const { data: users } = useUsersQuery();
@@ -58,7 +59,10 @@ const UserTable = () => {
           key: 'price',
           render: (orders: TOrder[]) => {
             if ((orders?.length || 0) === 0) return NO_DATA;
-            return orders.reduce((acc, order) => acc + order.price, 0);
+            return toMoneyFormat(
+              orders.reduce((acc, order) => acc + order.price, 0),
+              { suffix: '원' },
+            );
           },
         },
         { title: '안내메일 동의', dataIndex: ['marketing', 'email'] },
