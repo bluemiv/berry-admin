@@ -9,8 +9,6 @@ const ProductDetailPage = () => {
   const productId = params.productId;
   const { data: product } = useProductQuery(Number(productId));
 
-  console.log(product);
-
   return (
     <main className="p-md flex flex-col gap-md h-contents">
       <div className="grid grid-cols-3 gap-md">
