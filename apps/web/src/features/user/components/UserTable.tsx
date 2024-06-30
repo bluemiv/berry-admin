@@ -31,7 +31,7 @@ const UserTable = () => {
         },
         { title: '이메일주소', dataIndex: 'email' },
         {
-          title: '구매 정보 (스킨/일자)',
+          title: '구매 정보 (스킨/일자/금액)',
           dataIndex: 'orders',
           key: 'product',
           render: (orders: TOrder[]) => {
@@ -50,6 +50,8 @@ const UserTable = () => {
                       </Link>
                       <span>/</span>
                       <span>{dayjs(order.orderAt).format(DATE_FORMAT.DATE)}</span>
+                      <span>/</span>
+                      <span>{toMoneyFormat(order.price, { suffix: '원' })}</span>
                     </div>
                   );
                 })}
