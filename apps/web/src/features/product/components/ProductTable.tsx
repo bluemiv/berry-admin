@@ -22,16 +22,26 @@ const ProductTable = () => {
         },
         { title: '상세 내용', dataIndex: 'description' },
         {
-          title: '최종 버전',
+          title: '최종 배포 버전',
           key: 'lastVersion',
           dataIndex: '',
-          render: (record) => record?.versions?.[0]?.version || NO_DATA,
+          render: (record) => {
+            const releasedVersions = record?.versions?.filter(
+              (v: { releaseAt?: string }) => !!v?.releaseAt,
+            );
+            return releasedVersions?.[0]?.version || NO_DATA;
+          },
         },
         {
           title: '최근 배포일',
           key: 'lastReleaseAt',
           dataIndex: '',
-          render: (record) => <TableField.FullDate date={record?.versions?.[0]?.releaseAt} />,
+          render: (record) => {
+            const releasedVersions = record?.versions?.filter(
+              (v: { releaseAt?: string }) => !!v?.releaseAt,
+            );
+            return <TableField.FullDate date={releasedVersions?.[0]?.releaseAt} />;
+          },
         },
         {
           title: '최근 수정일',

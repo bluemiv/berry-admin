@@ -25,6 +25,16 @@ const productApi = {
     params,
   }),
   /**
+   * product의 버전을 생성하는 API
+   * @param productId product id
+   * @param params
+   *   version product version 값
+   */
+  createVersion: (productId: number, params: { version: string }) => ({
+    url: `/product/${productId}/version`,
+    params,
+  }),
+  /**
    * product의 버전을 배포하는 API
    * @param versionId product version id
    * @param params

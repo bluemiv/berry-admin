@@ -2,7 +2,12 @@ import React from 'react';
 import dayjs from 'dayjs';
 import { Button, Popconfirm, Table, Tag } from 'antd';
 import { useQueryClient } from '@tanstack/react-query';
-import { PRODUCT_QUERY_KEY, useProductQuery, useReleaseProductVersionMutation } from '@/queryHooks';
+import {
+  PRODUCT_QUERY_KEY,
+  PRODUCTS_QUERY_KEY,
+  useProductQuery,
+  useReleaseProductVersionMutation,
+} from '@/queryHooks';
 import { TableField } from '@/components';
 import { DATE_FORMAT } from '@/constants';
 
@@ -17,7 +22,8 @@ const ProductVersionTable = ({ productId }: TProps) => {
 
   const onClickRelease = async (id: number) => {
     await release({ versionId: id, releaseAt: dayjs().format(DATE_FORMAT.FULL_DATE) });
-    return queryClient.invalidateQueries({ queryKey: PRODUCT_QUERY_KEY });
+    await queryClient.invalidateQueries({ queryKey: PRODUCT_QUERY_KEY });
+    return queryClient.invalidateQueries({ queryKey: PRODUCTS_QUERY_KEY });
   };
 
   return (
