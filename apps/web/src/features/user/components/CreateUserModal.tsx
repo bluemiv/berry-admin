@@ -104,16 +104,11 @@ const CreateUserModal = ({ open, onClose }: TProps) => {
               }))}
           />
         </Form.Item>
+        <Form.Item name="price" label="구매 금액" required rules={[FORM_RULES.REQUIRED]}>
+          <Input type="number" min={5000} max={10000000} placeholder="구매 금액을 입력해주세요." />
+        </Form.Item>
         <Form.Item name="orderAt" label="구매 일자">
           <DatePicker placeholder="구매 일자를 선택해주세요." />
-        </Form.Item>
-        <Form.Item name="price" label="구매 금액" required rules={[FORM_RULES.REQUIRED]}>
-          <Input
-            type="number"
-            min={5000}
-            max={10000000}
-            placeholder="구매자의 이메일을 입력해주세요."
-          />
         </Form.Item>
         <Form.Item
           name="marketingEmail"
