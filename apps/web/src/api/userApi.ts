@@ -10,6 +10,13 @@ const userApi = {
     params,
   }),
   /**
+   * 사용자를 조회하는 API
+   * @param userId user id
+   */
+  getUser: (userId: number) => ({
+    url: `/user/${userId}`,
+  }),
+  /**
    * 사용자 목록을 조회하는 API
    * @param params
    */

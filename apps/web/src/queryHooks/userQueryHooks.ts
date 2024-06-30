@@ -26,6 +26,23 @@ export const useUsersQuery = (
     ...options,
   });
 
+export const USER_QUERY_KEY = [PREFIX, 'USER'];
+
+/**
+ * user를 조회하는 Query
+ * @param userId user id
+ */
+export const useUserQuery = (userId: number) =>
+  useQuery({
+    queryKey: [...USER_QUERY_KEY, userId],
+    queryFn: async () => {
+      const { url } = userApi.getUser(userId);
+      const { data } = await apiCaller.get(url);
+      return data as TUser;
+    },
+    enabled: !!userId,
+  });
+
 /**
  * User를 생성하는 Mutation
  */

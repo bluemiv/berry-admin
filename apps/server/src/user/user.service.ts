@@ -38,4 +38,11 @@ export class UserService {
 
     return { data, count };
   }
+
+  async find(userId: number) {
+    return this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['orders', 'orders.product', 'orders.productVersion'],
+    });
+  }
 }
