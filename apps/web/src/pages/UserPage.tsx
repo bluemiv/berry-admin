@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'antd';
-import { UserTable } from '@/features/user';
+import { UserTable, UserTableActions } from '@/features/user';
 
 const UserPage = () => {
   return (
@@ -11,7 +11,10 @@ const UserPage = () => {
         <Card title="전달 구매자 수">14명</Card>
       </div>
       <Card title="사용자">
-        <UserTable />
+        <div className="flex flex-col gap-md">
+          <UserTableActions />
+          <UserTable />
+        </div>
       </Card>
     </main>
   );

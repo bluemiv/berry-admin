@@ -33,7 +33,7 @@ export class UserService {
       where,
       take: limit,
       skip: (page - 1) * limit,
-      relations: ['orders'],
+      relations: ['orders', 'orders.product', 'orders.productVersion'],
     });
 
     return { data, count };

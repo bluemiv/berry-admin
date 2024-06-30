@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { apiCaller } from '@/utils';
 import productApi from '@/api/productApi';
 import { TPropsWithPaginationQuery } from '@/types';
+import { TProduct } from '@/features/product';
 
 const PREFIX = 'PRODUCT';
 
@@ -30,7 +31,7 @@ export const useProductsQuery = (searchParams?: TPropsWithPaginationQuery) =>
     queryFn: async () => {
       const { url, params } = productApi.getProducts(searchParams);
       const { data } = await apiCaller.get(url, params);
-      return data;
+      return data as { count: number; data: TProduct[] };
     },
   });
 

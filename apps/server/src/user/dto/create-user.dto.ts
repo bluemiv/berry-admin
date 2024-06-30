@@ -15,8 +15,8 @@ export class CreateUserDto {
   @IsOptional()
   email?: string;
 
-  @IsNotEmpty()
-  @ValidateNested({ each: true })
-  @Type(() => CreateOrderDto)
-  orders: CreateOrderDto[];
+  // @IsNotEmpty()
+  // @ValidateNested({ each: true })
+  // @Type(() => CreateOrderDto)
+  // orders: CreateOrderDto[];
 }
