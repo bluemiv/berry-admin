@@ -1,9 +1,9 @@
 import React from 'react';
 import { Card } from 'antd';
+import dayjs from 'dayjs';
 import { UserTable, UserTableActions } from '@/features/user';
 import { useUsersQuery } from '@/queryHooks';
 import { SummaryCard } from '@/components';
-import dayjs from 'dayjs';
 
 const UserPage = () => {
   const { data: users } = useUsersQuery({ limit: 100 });
