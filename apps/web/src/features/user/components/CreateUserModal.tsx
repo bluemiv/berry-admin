@@ -1,6 +1,6 @@
 import React from 'react';
 import { DatePicker, Form, Input, Modal, Radio, Select } from 'antd';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useQueryClient } from '@tanstack/react-query';
 import { DATE_FORMAT, FORM_RULES } from '@/constants';
 import {
@@ -74,7 +74,12 @@ const CreateUserModal = ({ open, onClose }: TProps) => {
         form={form}
         colon={false}
         onFinish={onSubmit}
-        initialValues={{ productId: products?.data?.[0]?.id, price: 5000, marketingEmail: true }}
+        initialValues={{
+          productId: products?.data?.[0]?.id,
+          price: 5000,
+          marketingEmail: true,
+          orderAt: dayjs(),
+        }}
       >
         <Form.Item name="name" label="성함" required rules={[FORM_RULES.REQUIRED]}>
           <Input placeholder="구매자의 성함을 입력해주세요." />

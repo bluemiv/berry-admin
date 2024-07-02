@@ -12,7 +12,7 @@ const UserTable = () => {
   const nav = useNavigate();
 
   const [searchParams] = useSearchParams();
-  const limit = Number(searchParams.get('limit') || '10');
+  const limit = Number(searchParams.get('limit') || '20');
   const page = Number(searchParams.get('page') || '1');
 
   const { data: users } = useUsersQuery({ page, limit });
