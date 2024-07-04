@@ -13,7 +13,7 @@ const space = {
 };
 
 const width = {
-  sidebar: '330px',
+  sidebar: '260px',
 };
 
 const height = {
