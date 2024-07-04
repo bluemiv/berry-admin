@@ -13,6 +13,13 @@ const orderApi = {
     url: '/order',
     params,
   }),
+  /**
+   * 주문을 삭제하는 API
+   * @param orderId order의 id
+   */
+  deleteOrder: (orderId: number) => ({
+    url: `/order/${orderId}`,
+  }),
 };
 
 export default orderApi;

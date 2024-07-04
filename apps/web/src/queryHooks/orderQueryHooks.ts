@@ -33,3 +33,15 @@ export const useCreateOrderMutation = () =>
       return data;
     },
   });
+
+/**
+ * 주문을 삭제하는 Mutation
+ */
+export const useDeleteOrderMutation = () =>
+  useMutation({
+    mutationFn: async ({ orderId }: { orderId: number }) => {
+      const { url } = orderApi.deleteOrder(orderId);
+      const { data } = await apiCaller.delete(url);
+      return data;
+    },
+  });

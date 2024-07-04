@@ -69,4 +69,8 @@ export class OrderService {
       await queryRunner.release();
     }
   }
+
+  delete(orderId: number) {
+    return this.orderRepository.delete(orderId);
+  }
 }

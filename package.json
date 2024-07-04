@@ -18,9 +18,6 @@
     "backup:db": "docker exec -t berry-admin-db pg_dump -U root -d berry-admin-db > berry-admin-db/backup.sql",
     "restore:db": "docker exec -i berry-admin-db psql -U root -d berry-admin-db < berry-admin-db/backup.sql"
   },
-  "engines": {
-    "node": ">=20"
-  },
   "dependencies": {
     "dayjs": "^1.11.11",
     "lodash": "^4.17.21"
@@ -29,5 +26,8 @@
     "@types/lodash": "^4.17.6",
     "concurrently": "^8.2.2",
     "prettier": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }

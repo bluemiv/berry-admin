@@ -1,14 +1,17 @@
 import React from 'react';
-import { Table, Tag } from 'antd';
+import { Button, Popconfirm, Table, Tag } from 'antd';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { useUsersQuery } from '@/queryHooks';
+import { useDeleteOrderMutation, USERS_QUERY_KEY, useUsersQuery } from '@/queryHooks';
 import { ROUTE_PATH } from '@/routes';
 import { DATE_FORMAT, NO_DATA } from '@/constants';
 import { TOrder } from '@/features/order';
 import { toMoneyFormat } from '@/utils';
+import { useQueryClient } from '@tanstack/react-query';
 
 const UserTable = () => {
+  const queryClient = useQueryClient();
+
   const nav = useNavigate();
 
   const [searchParams] = useSearchParams();
@@ -16,6 +19,12 @@ const UserTable = () => {
   const page = Number(searchParams.get('page') || '1');
 
   const { data: users } = useUsersQuery({ page, limit });
+  const { mutateAsync: deleteOrder } = useDeleteOrderMutation();
+
+  const onClickDeleteOrder = async (orderId: number) => {
+    await deleteOrder({ orderId });
+    return queryClient.invalidateQueries({ queryKey: USERS_QUERY_KEY });
+  };
 
   return (
     <Table
@@ -40,7 +49,13 @@ const UserTable = () => {
         },
         { title: '이메일주소', dataIndex: 'email' },
         {
-          title: '구매 정보 (스킨/일자/금액)',
+          title: '안내메일 동의',
+          dataIndex: 'marketingEmail',
+          render: (marketingEmail) =>
+            marketingEmail ? <Tag color="green">동의</Tag> : <Tag color="red">거부</Tag>,
+        },
+        {
+          title: '구매 스킨',
           dataIndex: 'orders',
           key: 'product',
           render: (orders: TOrder[]) => {
@@ -51,17 +66,12 @@ const UserTable = () => {
                   const product = order.product;
                   const productVersion = order.productVersion;
                   return (
-                    <div key={idx} className="flex gap-sm">
-                      <Link
-                        to={ROUTE_PATH.PRODUCT_DETAIL.replace(':productId', product.id.toString())}
-                      >
-                        {product.name} ({productVersion.version})
-                      </Link>
-                      <span>/</span>
-                      <span>{dayjs(order.orderAt).format(DATE_FORMAT.DATE)}</span>
-                      <span>/</span>
-                      <span>{toMoneyFormat(order.price, { suffix: '원' })}</span>
-                    </div>
+                    <Link
+                      key={idx}
+                      to={ROUTE_PATH.PRODUCT_DETAIL.replace(':productId', product.id.toString())}
+                    >
+                      {product.name} ({productVersion.version})
+                    </Link>
                   );
                 })}
               </div>
@@ -69,10 +79,58 @@ const UserTable = () => {
           },
         },
         {
-          title: '안내메일 동의',
-          dataIndex: 'marketingEmail',
-          render: (marketingEmail) =>
-            marketingEmail ? <Tag color="green">동의</Tag> : <Tag color="red">거부</Tag>,
+          title: '구매 일자',
+          dataIndex: 'orders',
+          key: 'orderAt',
+          render: (orders: TOrder[]) => {
+            if ((orders?.length || 0) === 0) return NO_DATA;
+            return (
+              <div className="flex flex-col">
+                {orders?.map((order, idx) => (
+                  <div key={idx}>{dayjs(order.orderAt).format(DATE_FORMAT.DATE)}</div>
+                ))}
+              </div>
+            );
+          },
+        },
+        {
+          title: '구매 금액',
+          dataIndex: 'orders',
+          key: 'price',
+          render: (orders: TOrder[]) => {
+            if ((orders?.length || 0) === 0) return NO_DATA;
+            return (
+              <div className="flex flex-col">
+                {orders?.map((order, idx) => (
+                  <div key={idx}>{toMoneyFormat(order.price, { suffix: '원' })}</div>
+                ))}
+              </div>
+            );
+          },
+        },
+        {
+          title: '구매건 삭제',
+          dataIndex: 'orders',
+          key: 'removeOrder',
+          width: 45,
+          render: (orders: TOrder[]) => {
+            if ((orders?.length || 0) === 0) return NO_DATA;
+            return (
+              <div className="flex flex-col">
+                {orders?.map((order, idx) => (
+                  <Popconfirm
+                    key={idx}
+                    title="주문을 삭제하시겠습니까?"
+                    okText="네"
+                    cancelText="아니오"
+                    onConfirm={() => onClickDeleteOrder(order.id)}
+                  >
+                    <Button>주문 삭제</Button>
+                  </Popconfirm>
+                ))}
+              </div>
+            );
+          },
         },
       ]}
       dataSource={users?.data || []}
