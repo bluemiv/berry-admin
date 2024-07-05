@@ -12,3 +12,17 @@ export const replaceRoutePath = (
     return acc.replace(`:${key}`, value.toString());
   }, basePath);
 };
+
+/**
+ * Object 를 query paremeter로 변경해주는 메소드
+ * @param obj
+ */
+export const toQueryParamString = (obj: { [key: string]: any }) => {
+  const queryParamList = Object.entries(obj).reduce((acc, entry) => {
+    const [key, value] = entry;
+    if (value === null || value === undefined || value === '') return acc;
+    acc.push(`${key}=${value}`);
+    return acc;
+  }, [] as string[]);
+  return `?${queryParamList.join('&')}`;
+};

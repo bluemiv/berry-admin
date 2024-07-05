@@ -1,24 +1,24 @@
 import React from 'react';
 import { Button, Popconfirm, Table, Tag } from 'antd';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
+import { useQueryClient } from '@tanstack/react-query';
+import { TPropsWithPaginationQuery } from '@/types';
 import { useDeleteOrderMutation, USERS_QUERY_KEY, useUsersQuery } from '@/queryHooks';
 import { ROUTE_PATH } from '@/routes';
 import { DATE_FORMAT, NO_DATA } from '@/constants';
 import { TOrder } from '@/features/order';
 import { toMoneyFormat } from '@/utils';
-import { useQueryClient } from '@tanstack/react-query';
 
-const UserTable = () => {
+interface TProps {
+  searchParams: TPropsWithPaginationQuery;
+}
+
+const UserTable = ({ searchParams }: TProps) => {
   const queryClient = useQueryClient();
-
   const nav = useNavigate();
 
-  const [searchParams] = useSearchParams();
-  const limit = Number(searchParams.get('limit') || '20');
-  const page = Number(searchParams.get('page') || '1');
-
-  const { data: users } = useUsersQuery({ page, limit });
+  const { data: users } = useUsersQuery(searchParams);
   const { mutateAsync: deleteOrder } = useDeleteOrderMutation();
 
   const onClickDeleteOrder = async (orderId: number) => {
@@ -29,7 +29,11 @@ const UserTable = () => {
   return (
     <Table
       rowKey="id"
-      pagination={{ total: users?.count || 0, current: page, pageSize: limit }}
+      pagination={{
+        total: users?.count || 0,
+        current: searchParams.page,
+        pageSize: searchParams.limit,
+      }}
       onChange={(pagination) => {
         nav(`?page=${pagination.current}&limit=${pagination.pageSize}`);
       }}

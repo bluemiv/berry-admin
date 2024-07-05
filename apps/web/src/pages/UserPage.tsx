@@ -1,12 +1,15 @@
 import React from 'react';
 import { Card } from 'antd';
 import dayjs from 'dayjs';
-import { UserTable, UserTableActions } from '@/features/user';
+import classNames from 'classnames';
+import { UserTable, UserTableActions, UserTableSearchForm } from '@/features/user';
 import { useUsersQuery } from '@/queryHooks';
 import { SummaryCard } from '@/components';
-import classNames from 'classnames';
+import { useAppSearchParams } from '@/hooks';
 
 const UserPage = () => {
+  const searchParams = useAppSearchParams();
+
   const { data: users } = useUsersQuery({ limit: 100 });
 
   const currentMonthUsers = users?.data?.filter((user) => {
@@ -47,8 +50,9 @@ const UserPage = () => {
       </div>
       <Card title="구매자 목록">
         <div className="flex flex-col gap-md">
+          <UserTableSearchForm />
           <UserTableActions />
-          <UserTable />
+          <UserTable searchParams={searchParams} />
         </div>
       </Card>
     </main>
