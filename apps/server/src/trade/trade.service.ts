@@ -60,7 +60,7 @@ export class TradeService {
     const { limit, page } = findTradeHistoryDto;
 
     const [data, count] = await this.tradeHistoryRepository.findAndCount({
-      where: { id: tradeId },
+      where: { trade: { id: tradeId } },
       order: { id: 'DESC' },
       take: limit,
       skip: (page - 1) * limit,
