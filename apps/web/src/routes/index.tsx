@@ -1,6 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { BaseLayout } from '@/layout';
-import { DashboardPage, ProductDetailPage, ProductPage, UserDetailPage, UserPage } from '@/pages';
+import {
+  DashboardPage,
+  ProductDetailPage,
+  ProductPage,
+  TradeDetailPage,
+  TradePage,
+  UserDetailPage,
+  UserPage,
+} from '@/pages';
 
 export const ROUTE_PATH = {
   ROOT: '/',
@@ -9,6 +17,8 @@ export const ROUTE_PATH = {
   USER_DETAIL: '/user/:userId',
   PRODUCT: '/product',
   PRODUCT_DETAIL: '/product/:productId',
+  TRADE: '/trade',
+  TRADE_DETAIL: '/trade/:tradeId',
 } as const;
 
 export const router = createBrowserRouter([
@@ -39,6 +49,14 @@ export const router = createBrowserRouter([
       {
         path: ROUTE_PATH.PRODUCT_DETAIL,
         element: <ProductDetailPage />,
+      },
+      {
+        path: ROUTE_PATH.TRADE,
+        element: <TradePage />,
+      },
+      {
+        path: ROUTE_PATH.TRADE_DETAIL,
+        element: <TradeDetailPage />,
       },
     ],
   },

@@ -19,6 +19,7 @@ const Nav = () => {
           { label: 'Dashboard', href: ROUTE_PATH.DASHBOARD },
           { label: 'User', href: ROUTE_PATH.USER },
           { label: 'Product', href: ROUTE_PATH.PRODUCT },
+          { label: 'Trade', href: ROUTE_PATH.TRADE },
         ].map(({ label, href }) => {
           const isActive = new RegExp(replaceRoutePath(href, replaceRouterPathParams)).test(
             location.pathname,
