@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import React, { useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { TRADE_HISTORY_QUERY_KEY } from '@/queryHooks';
+import { TRADE_HISTORY_QUERY_KEY, useTradeQuery } from '@/queryHooks';
 import CreateTradeHistoryModal from '@/features/trade/components/CreateTradeHistoryModal';
 
 interface TProps {
@@ -9,17 +9,19 @@ interface TProps {
 }
 
 const TradeHistoryTableActions = ({ tradeId }: TProps) => {
+  const { data: tradeRes } = useTradeQuery(tradeId);
+
   const [openCreateModal, setOpenCreateModal] = useState<boolean>(false);
   const queryClient = useQueryClient();
 
   return (
     <div className="flex gap-md justify-end">
-      <Button ghost type="primary" onClick={() => setOpenCreateModal(true)}>
+      <Button ghost type="primary" onClick={() => setOpenCreateModal(true)} disabled={!tradeRes}>
         Trade 상세 건 등록
       </Button>
-      {openCreateModal && (
+      {!!tradeRes && openCreateModal && (
         <CreateTradeHistoryModal
-          tradeId={tradeId}
+          trade={tradeRes}
           open={openCreateModal}
           onClose={(options) => {
             setOpenCreateModal(false);

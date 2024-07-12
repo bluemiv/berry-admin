@@ -13,10 +13,12 @@ const CreateTradeModal = ({ open, onClose }: TProps) => {
   const { mutateAsync: create } = useCreateTradeMutation();
 
   const onSubmit = async (formParams: {
-    symbol: string;
+    title: string;
     description?: string;
     startSeed?: number;
     goalSeed?: number;
+    deposit?: number;
+    withdraw?: number;
   }) => {
     await create(formParams);
     return onClose({ refresh: true });
@@ -31,9 +33,18 @@ const CreateTradeModal = ({ open, onClose }: TProps) => {
       onOk={() => form.submit()}
       onCancel={() => onClose()}
     >
-      <Form form={form} colon={false} layout="vertical" onFinish={onSubmit}>
-        <Form.Item name="symbol" label="Trade 종목" required rules={[FORM_RULES.REQUIRED]}>
-          <Input placeholder="거래 종목을 입력해주세요." />
+      <Form
+        form={form}
+        colon={false}
+        layout="vertical"
+        onFinish={onSubmit}
+        initialValues={{
+          deposit: 0,
+          withdraw: 0,
+        }}
+      >
+        <Form.Item name="title" label="Trade 제목" required rules={[FORM_RULES.REQUIRED]}>
+          <Input placeholder="Trade 제목을 입력해주세요." />
         </Form.Item>
         <Form.Item name="description" label="Trade 설명">
           <Input.TextArea rows={3} placeholder="설명을 입력해주세요." />
@@ -43,6 +54,12 @@ const CreateTradeModal = ({ open, onClose }: TProps) => {
         </Form.Item>
         <Form.Item name="goalSeed" label="목표 Seed (단위: 원)">
           <Input type="number" placeholder="목표 seed를 입력해주세요." />
+        </Form.Item>
+        <Form.Item name="deposit" label="입금한 금액 (단위: 원)">
+          <Input type="number" placeholder="입금한 금액을 입력해주세요." />
+        </Form.Item>
+        <Form.Item name="withdraw" label="출금한 금액 (단위: 원)">
+          <Input type="number" placeholder="출금한 금액을 입력해주세요." />
         </Form.Item>
       </Form>
     </Modal>

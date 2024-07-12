@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Put, Query } from '@nestjs/common';
 import { CreateTradeDto } from './dto/create-trade.dto';
 import { TradeService } from './trade.service';
 import { FindTradeDto } from './dto/find-trade.dto';
 import { FindTradeHistoryDto } from './dto/find-trade-history.dto';
 import { CreateTradeHistoryDto } from '../trade-history/dto/create-trade-history.dto';
+import { UpdateTradeDto } from './dto/update-trade.dto';
 
 @Controller('trade')
 export class TradeController {
@@ -22,6 +23,11 @@ export class TradeController {
   @Get(':id')
   find(@Param('id') tradeId: number) {
     return this.tradeService.find(tradeId);
+  }
+
+  @Put(':id')
+  update(@Param('id') tradeId: number, @Body() updateTradeDto: UpdateTradeDto) {
+    return this.tradeService.updateTrade(tradeId, updateTradeDto);
   }
 
   @Post(':id/history')

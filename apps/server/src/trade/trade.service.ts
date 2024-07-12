@@ -7,6 +7,7 @@ import { FindTradeDto } from './dto/find-trade.dto';
 import { TradeHistory } from '../trade-history/entities/trade-history.entity';
 import { FindTradeHistoryDto } from './dto/find-trade-history.dto';
 import { CreateTradeHistoryDto } from '../trade-history/dto/create-trade-history.dto';
+import { UpdateTradeDto } from './dto/update-trade.dto';
 
 @Injectable()
 export class TradeService {
@@ -21,12 +22,17 @@ export class TradeService {
     return this.tradeRepository.save(trade);
   }
 
+  async updateTrade(tradeId: number, updateTradeDto: UpdateTradeDto) {
+    await this.tradeRepository.update(tradeId, updateTradeDto);
+    return this.tradeRepository.findOneBy({ id: tradeId });
+  }
+
   async findAll(findTradeDto: FindTradeDto) {
-    const { limit, page, symbol } = findTradeDto;
+    const { limit, page, title } = findTradeDto;
 
     const where = {};
-    if (!!symbol) {
-      where['symbol'] = Like(`%${symbol}%`);
+    if (!!title) {
+      where['title'] = Like(`%${title}%`);
     }
 
     const [data, count] = await this.tradeRepository.findAndCount({

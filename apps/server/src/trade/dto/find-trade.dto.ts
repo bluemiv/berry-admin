@@ -4,5 +4,5 @@ import { PaginationDto } from '../../common/dto/pagination.dto';
 export class FindTradeDto extends PaginationDto {
   @IsOptional()
   @IsString()
-  symbol?: string;
+  title?: string;
 }

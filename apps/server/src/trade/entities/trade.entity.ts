@@ -5,7 +5,7 @@ import { TradeHistory } from '../../trade-history/entities/trade-history.entity'
 @Entity({ orderBy: { id: 'DESC' } })
 export class Trade extends CommonEntity {
   @Column({ nullable: false })
-  symbol: string;
+  title: string;
 
   @Column({ nullable: true })
   description: string;
@@ -15,6 +15,12 @@ export class Trade extends CommonEntity {
 
   @Column({ nullable: true })
   goalSeed: number;
+
+  @Column({ nullable: true })
+  deposit: number;
+
+  @Column({ nullable: true })
+  withdraw: number;
 
   @OneToMany(
     () => TradeHistory,

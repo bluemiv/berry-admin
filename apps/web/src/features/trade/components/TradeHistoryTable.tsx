@@ -21,9 +21,9 @@ const TradeHistoryTable = ({ tradeId }: TProps) => {
       columns={[
         { title: '#', dataIndex: 'id' },
         {
-          title: '현재 Seed (단위: 원)',
+          title: '입출금 제외 현재 Seed (단위: 원)',
           dataIndex: 'currentSeed',
-          render: (price) => toMoneyFormat(price, { suffix: '원' }),
+          render: (currentSeed) => toMoneyFormat(currentSeed, { suffix: '원' }),
         },
         {
           title: '처음 대비 수익금',
@@ -31,7 +31,9 @@ const TradeHistoryTable = ({ tradeId }: TProps) => {
           key: 'diffPrice',
           render: (currentSeed) => {
             if (!currentSeed || !tradeRes?.startSeed) return NO_DATA;
-            return toMoneyFormat(currentSeed - tradeRes.startSeed, { suffix: '원' });
+            return toMoneyFormat(currentSeed - tradeRes.startSeed, {
+              suffix: '원',
+            });
           },
         },
         {
@@ -43,6 +45,7 @@ const TradeHistoryTable = ({ tradeId }: TProps) => {
             const rate =
               Math.round(((currentSeed - tradeRes.startSeed) / tradeRes.startSeed) * 10000) / 100;
             const label = `${rate}%`;
+
             return (
               <span className={rate > 0 ? 'text-red-600' : rate < 0 ? 'text-blue-600' : ''}>
                 {label}
@@ -56,7 +59,9 @@ const TradeHistoryTable = ({ tradeId }: TProps) => {
           key: 'remain',
           render: (currentSeed) => {
             if (!currentSeed || !tradeRes?.goalSeed) return NO_DATA;
-            return toMoneyFormat(tradeRes.goalSeed - currentSeed, { suffix: '원' });
+            return toMoneyFormat(tradeRes.goalSeed - currentSeed, {
+              suffix: '원',
+            });
           },
         },
         { title: '상세 내용', dataIndex: 'description' },

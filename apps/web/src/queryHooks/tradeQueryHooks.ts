@@ -2,6 +2,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { apiCaller } from '@/utils';
 import { tradeApi } from '@/api';
 import { TPropsWithPaginationQuery } from '@/types';
+import { TTrade } from '@/features/trade/types';
 
 const PREFIX = 'TRADE';
 
@@ -11,13 +12,13 @@ export const TRADES_QUERY_KEY = [PREFIX, 'TRADES'];
  * Trade 목록을 조회하는 쿼리
  * @param searchParams
  */
-export const useTradesQuery = (searchParams?: TPropsWithPaginationQuery<{ symbol?: string }>) =>
+export const useTradesQuery = (searchParams?: TPropsWithPaginationQuery<{ title?: string }>) =>
   useQuery({
     queryKey: [...TRADES_QUERY_KEY, searchParams],
     queryFn: async () => {
       const { url, params } = tradeApi.getTrades(searchParams);
       const { data } = await apiCaller.get(url, params);
-      return data;
+      return data as { count: number; data: TTrade[] };
     },
   });
 
@@ -27,25 +28,67 @@ export const useTradesQuery = (searchParams?: TPropsWithPaginationQuery<{ symbol
 export const useCreateTradeMutation = () =>
   useMutation({
     mutationFn: async ({
-      symbol,
+      title,
       description,
       startSeed,
       goalSeed,
+      deposit,
+      withdraw,
     }: {
-      symbol: string;
+      title: string;
       description?: string;
       startSeed?: number;
       goalSeed?: number;
+      deposit?: number;
+      withdraw?: number;
     }) => {
       const { url, params } = tradeApi.createTrade({
-        symbol: symbol.trim(),
+        title: title.trim(),
         description: description?.trim(),
         startSeed,
         goalSeed,
+        deposit,
+        withdraw,
       });
       const { data } = await apiCaller.post(url, params);
-      return data;
+      return data as TTrade;
     },
+  });
+
+/**
+ * Trade를 수정하는 Mutation
+ */
+export const useUpdateTradeMutation = (options?: { [key: string]: any }) =>
+  useMutation({
+    mutationFn: async ({
+      id,
+      title,
+      description,
+      startSeed,
+      goalSeed,
+      deposit,
+      withdraw,
+    }: {
+      id: number;
+      title?: string;
+      description?: string;
+      startSeed?: number;
+      goalSeed?: number;
+      deposit?: number;
+      withdraw?: number;
+    }) => {
+      const { url, params } = tradeApi.updateTrade(id, {
+        title: title?.trim(),
+        description: description?.trim(),
+        startSeed,
+        goalSeed,
+        deposit,
+        withdraw,
+      });
+      const { data } = await apiCaller.put(url, params);
+      return data as TTrade;
+    },
+    ...options,
   });
 
 export const TRADE_QUERY_KEY = [PREFIX, 'TRADE'];
@@ -60,7 +103,7 @@ export const useTradeQuery = (tradeId: number) =>
     queryFn: async () => {
       const { url } = tradeApi.getTrade(tradeId);
       const { data } = await apiCaller.get(url);
-      return data;
+      return data as TTrade;
     },
     enabled: !!tradeId,
   });
@@ -74,7 +117,7 @@ export const TRADE_HISTORY_QUERY_KEY = [PREFIX, 'TRADE_HISTORY'];
  */
 export const useTradeHistoryQuery = (
   tradeId: number,
-  searchParams?: TPropsWithPaginationQuery<{ symbol?: string }>,
+  searchParams?: TPropsWithPaginationQuery<{ title?: string }>,
 ) =>
   useQuery({
     queryKey: [...TRADE_HISTORY_QUERY_KEY, searchParams],

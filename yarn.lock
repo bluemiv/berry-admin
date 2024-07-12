@@ -1821,6 +1821,7 @@ __metadata:
   resolution: "@berry-admin/web@workspace:apps/web"
   dependencies:
     "@ant-design/cssinjs": "npm:^1.21.0"
+    "@ant-design/icons": "npm:^5.3.7"
     "@craco/craco": "npm:^7.1.0"
     "@craco/types": "npm:^7.1.0"
     "@tanstack/eslint-plugin-query": "npm:^5.47.0"

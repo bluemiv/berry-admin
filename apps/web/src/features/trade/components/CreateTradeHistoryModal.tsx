@@ -2,21 +2,25 @@ import React from 'react';
 import { Form, Input, Modal } from 'antd';
 import { FORM_RULES } from '@/constants';
 import { useCreateTradeHistoryMutation } from '@/queryHooks';
+import { TTrade } from '@/features/trade';
 
 interface TProps {
-  tradeId: number;
+  trade: TTrade;
   open: boolean;
   onClose: (options?: { refresh: boolean }) => void;
 }
 
-const CreateTradeHistoryModal = ({ open, onClose, tradeId }: TProps) => {
+const CreateTradeHistoryModal = ({ open, onClose, trade }: TProps) => {
+  const deposit = trade?.deposit || 0;
+  const withdraw = trade?.withdraw || 0;
+
   const [form] = Form.useForm();
   const { mutateAsync: create } = useCreateTradeHistoryMutation();
 
   const onSubmit = async (formParams: { currentSeed: number; description?: string }) => {
     await create({
-      tradeId,
-      currentSeed: Number(formParams.currentSeed),
+      tradeId: trade.id,
+      currentSeed: Number(formParams.currentSeed) - deposit + withdraw,
       description: formParams?.description?.trim(),
     });
     return onClose({ refresh: true });
