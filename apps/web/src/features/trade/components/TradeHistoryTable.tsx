@@ -1,23 +1,40 @@
 import React from 'react';
 import { Table } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import { TableField } from '@/components';
 import { useTradeHistoryQuery, useTradeQuery } from '@/queryHooks';
-import { toMoneyFormat } from '@/utils';
+import { toMoneyFormat, toQueryParamString } from '@/utils';
 import { NO_DATA } from '@/constants';
+import { useAppSearchParams } from '@/hooks';
 
 interface TProps {
   tradeId: number;
 }
 
 const TradeHistoryTable = ({ tradeId }: TProps) => {
+  const nav = useNavigate();
+  const searchParams = useAppSearchParams();
+
+  const page = Number(searchParams.page || 1);
+  const limit = Number(searchParams.limit || 50);
+
   const { data: tradeRes } = useTradeQuery(tradeId);
-  const { data: tradesHistoryRes, isLoading } = useTradeHistoryQuery(tradeId);
+  const { data: tradesHistoryRes, isLoading } = useTradeHistoryQuery(tradeId, { page, limit });
 
   return (
     <Table
       loading={isLoading}
       rowKey="id"
-      pagination={{ total: tradesHistoryRes?.count || 0 }}
+      pagination={{
+        total: tradesHistoryRes?.count || 0,
+        current: page,
+        pageSize: limit,
+        showQuickJumper: true,
+        showSizeChanger: true,
+      }}
+      onChange={(pagination) => {
+        nav(toQueryParamString({ page: pagination.current, limit: pagination.pageSize }));
+      }}
       columns={[
         { title: '#', dataIndex: 'id' },
         {

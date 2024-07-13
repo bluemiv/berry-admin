@@ -8,7 +8,7 @@ import { useDeleteOrderMutation, USERS_QUERY_KEY, useUsersQuery } from '@/queryH
 import { ROUTE_PATH } from '@/routes';
 import { DATE_FORMAT, NO_DATA } from '@/constants';
 import { TOrder } from '@/features/order';
-import { toMoneyFormat } from '@/utils';
+import { toMoneyFormat, toQueryParamString } from '@/utils';
 
 interface TProps {
   searchParams: TPropsWithPaginationQuery;
@@ -35,7 +35,7 @@ const UserTable = ({ searchParams }: TProps) => {
         pageSize: searchParams.limit,
       }}
       onChange={(pagination) => {
-        nav(`?page=${pagination.current}&limit=${pagination.pageSize}`);
+        nav(toQueryParamString({ page: pagination.current, limit: pagination.pageSize }));
       }}
       columns={[
         { title: '#', dataIndex: 'id' },
